@@ -1,0 +1,11 @@
+javaVersion=17
+#Plugins
+systemProp.kotlinVersion=${kotlin_version}
+systemProp.dependencyManagementPluginVersion=1.1.5
+systemProp.springBootVersion=${spring_boot_version}
+#Dependencies
+systemProp.kvisionVersion=${kvision_version}
+coroutinesVersion=${coroutines_version}
+
+kotlin.mpp.stability.nowarn=true
+org.gradle.jvmargs=-Xmx2g

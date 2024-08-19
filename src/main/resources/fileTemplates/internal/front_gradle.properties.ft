@@ -1,0 +1,5 @@
+javaVersion=17
+#Plugins
+systemProp.kotlinVersion=${kotlin_version}
+#Dependencies
+systemProp.kvisionVersion=${kvision_version}

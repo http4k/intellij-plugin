@@ -2,8 +2,8 @@ package org.http4k.intellij.step
 
 import org.http4k.intellij.wizard.Answer
 import org.http4k.intellij.wizard.Step
-import java.awt.BorderLayout.CENTER
-import java.awt.GridLayout
+import javax.swing.BoxLayout
+import javax.swing.BoxLayout.Y_AXIS
 import javax.swing.JCheckBox
 import javax.swing.JPanel
 
@@ -15,21 +15,21 @@ fun MultiChoiceView(multiChoice: Step.MultiChoice, parent: JPanel, onComplete: O
         val selected = multiChoice.options.filter { it.default }.toMutableSet()
 
         val optionsPanel = JPanel().apply {
-            layout = GridLayout(0, 4, 10, 10)
+            layout = BoxLayout(this, Y_AXIS)
         }
 
-        multiChoice.options.forEach { option ->
-            val checkBox = JCheckBox().apply {
-                isSelected = option.default
-                addActionListener {
-                    if (isSelected) selected.add(option) else selected.remove(option)
-                }
-            }
+        panel.add(optionsPanel)
 
-            optionsPanel.add(OptionBox(checkBox, option))
+        multiChoice.options
+            .sortedBy { it.label }
+            .forEach { option ->
+                optionsPanel.add(OptionBox(JCheckBox().apply {
+                    isSelected = option.default
+                    addActionListener {
+                        if (isSelected) selected.add(option) else selected.remove(option)
+                    }
+                }, option))
         }
-
-        panel.add(optionsPanel, CENTER)
 
         panel.nextButton.apply {
             addActionListener {

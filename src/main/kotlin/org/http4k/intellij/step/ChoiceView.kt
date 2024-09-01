@@ -3,8 +3,8 @@ package org.http4k.intellij.step
 import org.http4k.intellij.wizard.Answer
 import org.http4k.intellij.wizard.Option
 import org.http4k.intellij.wizard.Step
-import java.awt.BorderLayout.SOUTH
-import java.awt.GridLayout
+import javax.swing.BoxLayout
+import javax.swing.BoxLayout.Y_AXIS
 import javax.swing.ButtonGroup
 import javax.swing.JPanel
 import javax.swing.JRadioButton
@@ -21,7 +21,7 @@ fun ChoiceView(choice: Step.Choice, parent: JPanel, onComplete: OnComplete): JPa
                 selected.steps.isEmpty() ->
                     onComplete(choice.answersFor(selected, childAnswers))
 
-                else -> parent.add(ChildStepsView(selected.steps, parent) {
+                else -> parent.addMax(ChildStepsView(selected.steps, parent) {
                     onComplete(choice.answersFor(selected, childAnswers.toList() + it))
                 })
             }
@@ -34,22 +34,24 @@ fun ChoiceView(choice: Step.Choice, parent: JPanel, onComplete: OnComplete): JPa
         val buttonGroup = ButtonGroup()
 
         val optionsPanel = JPanel().apply {
-            layout = GridLayout(0, if(choice.options.size < 3) 2 else 3, 10, 10)
+            layout = BoxLayout(this, Y_AXIS)
         }
 
-        choice.options.forEach { option ->
-            val button = JRadioButton().apply {
-                if (option.default) isSelected = true
-                addActionListener {
-                    selected = option
-                    nextButton.isEnabled = true
+        choice.options
+            .sortedBy { if (it.default) "0" else "1" + it.label }
+            .forEach { option ->
+                val button = JRadioButton().apply {
+                    if (option.default) isSelected = true
+                    addActionListener {
+                        selected = option
+                        nextButton.isEnabled = true
+                    }
                 }
+                buttonGroup.add(button)
+                optionsPanel.add(OptionBox(button, option))
             }
-            buttonGroup.add(button)
-            optionsPanel.add(OptionBox(button, option))
-        }
 
-        panel.add(optionsPanel, SOUTH)
+        panel.add(optionsPanel)
 
     }
 }

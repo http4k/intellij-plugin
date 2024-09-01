@@ -12,7 +12,8 @@ import org.http4k.intellij.utils.backgroundTask
 import org.http4k.intellij.utils.createRunConfiguration
 import org.http4k.intellij.utils.setNextTo
 import org.http4k.intellij.utils.unzipInto
-import org.http4k.intellij.wizard.StackId
+import org.http4k.intellij.wizard.Answer
+import org.http4k.intellij.wizard.Answer.Text
 import org.http4k.intellij.wizard.ToolboxApi
 import org.jetbrains.plugins.gradle.service.project.GradleAutoImportAware
 import org.jetbrains.plugins.gradle.service.project.open.linkAndRefreshGradleProject
@@ -22,11 +23,11 @@ import java.util.concurrent.atomic.AtomicReference
 class Http4kModuleBuilder : ModuleBuilder() {
     private val api = ToolboxApi(debug = false)
 
-    private val stackId = AtomicReference<StackId>()
+    private val answer = AtomicReference<Answer>()
 
     override fun getCustomOptionsStep(context: WizardContext, parentDisposable: Disposable) =
         QuestionnaireStep(api.questionnaire(), context) {
-            stackId.set(api.stackIdFor(it.first()))
+            answer.set(it.first())
             context.setNextTo(true)
         }
 
@@ -36,9 +37,10 @@ class Http4kModuleBuilder : ModuleBuilder() {
         modifiableRootModel.apply {
             addContentEntry(root)
             project.backgroundTask("Setting up project") {
-                api.generateProject(stackId.get()).unzipInto(File(root.path))
+                api.generateProject(api.stackIdFor(answer.get())).unzipInto(File(root.path))
 
-                modifiableRootModel.project.createRunConfiguration()
+                val (clazz, pkg) = answer.get().getClassAndPackage()
+                modifiableRootModel.project.createRunConfiguration(pkg, clazz)
                 GradleAutoImportAware()
                 invokeLater {
                     linkAndRefreshGradleProject(root.canonicalPath + "/build.gradle.kts", project)
@@ -47,6 +49,9 @@ class Http4kModuleBuilder : ModuleBuilder() {
         }
 
     }
+
+    private fun Answer.getClassAndPackage() =
+        steps.dropLast(1).last().steps.filterIsInstance<Text>().map { it.answers.first() }
 
     private fun createAndGetRoot() = contentEntryPath
         ?.let(FileUtil::toSystemIndependentName)

@@ -20,15 +20,14 @@ data class Option(val label: String, val description: String?, val default: Bool
     Type(value = MultiChoice::class, name = "multi")
 )
 
-sealed class Step(val label: String, val description: String? = null) {
+sealed class Step(val label: String) {
     override fun toString() = Jackson.compactify(Jackson.asFormatString(this))
 
-    class Section(label: String, description: String?, val steps: List<Step>) : Step(label, description)
-    class Input(label: String, description: String?, val required: Boolean, val default: String) :
-        Step(label, description)
+    class Section(label: String, val steps: List<Step>) : Step(label)
+    class Input(label: String, val default: String) : Step(label)
 
-    class Choice(label: String, description: String?, val options: List<Option>) : Step(label, description)
-    class MultiChoice(label: String, description: String?, val options: List<Option>) : Step(label, description)
+    class Choice(label: String, val options: List<Option>) : Step(label)
+    class MultiChoice(label: String, val options: List<Option>) : Step(label)
 }
 
 data class Questionnaire(val steps: List<Step>)
@@ -42,6 +41,15 @@ sealed class Answer {
     abstract val steps: List<Answer>
     abstract val label: String
 
-    data class Text(override val label: String, val answers: List<String> = emptyList(), override val steps: List<Answer> = emptyList()) : Answer()
-    data class Step(override val label: String, val answers: List<Answer> = emptyList(), override val steps: List<Answer> = emptyList()) : Answer()
+    data class Text(
+        override val label: String,
+        val answers: List<String> = emptyList(),
+        override val steps: List<Answer> = emptyList()
+    ) : Answer()
+
+    data class Step(
+        override val label: String,
+        val answers: List<Answer> = emptyList(),
+        override val steps: List<Answer> = emptyList()
+    ) : Answer()
 }

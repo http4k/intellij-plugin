@@ -4,7 +4,7 @@
     <name>http4k Project Wizard</name>
     <vendor email="info@http4k.org" url="https://http4k.org">http4k</vendor>
     <change-notes>
-        Some notes
+        Configure your project with http4k dependencies and settings.
     </change-notes>
 
     <description>

@@ -2,7 +2,6 @@ package org.http4k.intellij.step
 
 import org.http4k.intellij.wizard.Answer
 import org.http4k.intellij.wizard.Step
-import java.awt.Component.LEFT_ALIGNMENT
 import java.awt.event.KeyAdapter
 import java.awt.event.KeyEvent
 import javax.swing.JPanel
@@ -10,12 +9,13 @@ import javax.swing.JTextField
 
 fun InputView(input: Step.Input, parent: JPanel, onComplete: OnComplete): JPanel {
 
-    val selection = JTextField(input.default)
+    val selection = JTextField(input.default).apply {
+        columns = 30
+    }
 
     val panel = QuestionPanel(input.label, true, selection)
     return panel.apply {
         selection.apply {
-            alignmentX = LEFT_ALIGNMENT
             addKeyListener(object : KeyAdapter() {
                 override fun keyReleased(e: KeyEvent) {
                     panel.nextButton.isEnabled = text.isNotBlank()

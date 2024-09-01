@@ -33,7 +33,7 @@ class ToolboxApi(
 
     fun stackIdFor(answer: Answer): StackId {
         val downloadUrl =
-            LOCATION(http.debug()(Request(POST, "/api/v1/project/questionnaire").with(Body.auto<Answer>().toLens() of answer)))
+            LOCATION(http(Request(POST, "/api/v1/project/questionnaire").with(Body.auto<Answer>().toLens() of answer)))
         return StackId.of(downloadUrl.toString().substring(downloadUrl.toString().lastIndexOf('/') + 1))
     }
 

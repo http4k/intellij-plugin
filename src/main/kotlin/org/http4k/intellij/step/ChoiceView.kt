@@ -1,0 +1,59 @@
+package org.http4k.intellij.step
+
+import org.http4k.intellij.wizard.Answer
+import org.http4k.intellij.wizard.Option
+import org.http4k.intellij.wizard.Step
+import java.awt.BorderLayout.SOUTH
+import java.awt.GridLayout
+import javax.swing.ButtonGroup
+import javax.swing.JPanel
+import javax.swing.JRadioButton
+
+fun ChoiceView(choice: Step.Choice, parent: JPanel, onComplete: OnComplete): JPanel {
+    val childAnswers = mutableListOf<Answer>()
+    var selected = choice.options.first { it.default }
+
+    val panel = QuestionPanel(choice.label, false)
+
+    panel.nextButton.apply {
+        addActionListener {
+            when {
+                selected.steps.isEmpty() ->
+                    onComplete(choice.answersFor(selected, childAnswers))
+
+                else -> parent.add(ChildStepsView(selected.steps, parent) {
+                    onComplete(choice.answersFor(selected, childAnswers.toList() + it))
+                })
+            }
+            parent.remove(panel)
+            parent.revalidate()
+        }
+    }
+
+    return panel.apply {
+        val buttonGroup = ButtonGroup()
+
+        val optionsPanel = JPanel().apply {
+            layout = GridLayout(0, if(choice.options.size < 3) 2 else 3, 10, 10)
+        }
+
+        choice.options.forEach { option ->
+            val button = JRadioButton().apply {
+                if (option.default) isSelected = true
+                addActionListener {
+                    selected = option
+                    nextButton.isEnabled = true
+                }
+            }
+            buttonGroup.add(button)
+            optionsPanel.add(OptionBox(button, option))
+        }
+
+        panel.add(optionsPanel, SOUTH)
+
+    }
+}
+
+private fun Step.Choice.answersFor(selected: Option, childAnswers: List<Answer>) = listOf(
+    Answer.Step(label, listOf(Answer.Text(selected.label, steps = childAnswers)))
+)

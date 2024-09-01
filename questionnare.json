@@ -1,0 +1,925 @@
+{
+    "steps": [
+        {
+            "stepType": "section",
+            "label": "1. Project core",
+            "steps": [
+                {
+                    "stepType": "choice",
+                    "label": "What kind of app are you writing?",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "Server",
+                            "description": "Standard HTTP app driven by a Server-engine.",
+                            "default": true,
+                            "steps": [
+                                {
+                                    "stepType": "choice",
+                                    "label": "Do you need server-side WebSockets or SSE?",
+                                    "options": [
+                                        {
+                                            "optionType": "yes",
+                                            "default": false,
+                                            "steps": [
+                                                {
+                                                    "stepType": "choice",
+                                                    "label": "Select a server engine:",
+                                                    "options": [
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Jetty",
+                                                            "description": "This stalwart server engine is the default choice for projects that need something simple to configure. (Supports WebSockets)",
+                                                            "default": true,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Netty",
+                                                            "description": "Highly configurable, Netty is the basis for a lot of other JVM server-ware. (Supports WebSockets)",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Java Websocket",
+                                                            "description": "This is a server for providing dedicated Websocket protocol support",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Undertow",
+                                                            "description": "The http4k team's default choice of server engine. A total workhorse and fast to boot! (Supports WebSockets and SSE)",
+                                                            "default": false,
+                                                            "steps": []
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "label": "Yes",
+                                            "description": null
+                                        },
+                                        {
+                                            "optionType": "no",
+                                            "default": true,
+                                            "steps": [
+                                                {
+                                                    "stepType": "choice",
+                                                    "label": "Select a server engine:",
+                                                    "options": [
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Apache",
+                                                            "description": "From Apache HttpComponents, this backend scored the best in the TechEmpower benchmarks and works out of the box with GraalVM.",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Jetty",
+                                                            "description": "This stalwart server engine is the default choice for projects that need something simple to configure. (Supports WebSockets)",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Helidon",
+                                                            "description": "Helidon Nima, the first server backend to be built from the ground up to take advantage of Loom Virtual Threads.",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Ktor-CIO",
+                                                            "description": "Kotlin powered coroutine-based server engine from Jetbrains.",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Ktor-Netty",
+                                                            "description": "Netty-based server engine from Jetbrains.",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Netty",
+                                                            "description": "Highly configurable, Netty is the basis for a lot of other JVM server-ware. (Supports WebSockets)",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Ratpack",
+                                                            "description": "Based on Netty, this Java library bills itself as a lean and powerful foundation for building scalable JVM apps.",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Sun HTTP",
+                                                            "description": "This development server engine comes bundled with http4k-core. Great for testing and boots in super fast time.",
+                                                            "default": true,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Java Websocket",
+                                                            "description": "This is a server for providing dedicated Websocket protocol support",
+                                                            "default": false,
+                                                            "steps": []
+                                                        },
+                                                        {
+                                                            "optionType": "text",
+                                                            "label": "Undertow",
+                                                            "description": "The http4k team's default choice of server engine. A total workhorse and fast to boot! (Supports WebSockets and SSE)",
+                                                            "default": false,
+                                                            "steps": []
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "label": "No",
+                                            "description": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Serverless",
+                            "description": "http4k app deployed to a cloud-based FaaS platform.",
+                            "default": false,
+                            "steps": [
+                                {
+                                    "stepType": "choice",
+                                    "label": "Select serverless platform:",
+                                    "options": [
+                                        {
+                                            "optionType": "text",
+                                            "label": "Alibaba Cloud Functions",
+                                            "description": "Another massive Chinese foray into the Serverless space.",
+                                            "default": false,
+                                            "steps": []
+                                        },
+                                        {
+                                            "optionType": "text",
+                                            "label": "AWS Lambda",
+                                            "description": "The granddaddy of FaaS implementations.",
+                                            "default": true,
+                                            "steps": []
+                                        },
+                                        {
+                                            "optionType": "text",
+                                            "label": "Azure Functions",
+                                            "description": "Microsoft's Cloud platform is popular with industries.",
+                                            "default": false,
+                                            "steps": []
+                                        },
+                                        {
+                                            "optionType": "text",
+                                            "label": "Google Cloud Functions",
+                                            "description": "Google's foray into the JVM FaaS space.",
+                                            "default": false,
+                                            "steps": []
+                                        },
+                                        {
+                                            "optionType": "text",
+                                            "label": "Apache OpenWhisk",
+                                            "description": "Popular with home-grown K8S FaaS clusters and available on the IBM Cloud platform.",
+                                            "default": false,
+                                            "steps": []
+                                        },
+                                        {
+                                            "optionType": "text",
+                                            "label": "Tencent Cloud Functions",
+                                            "description": "FaaS from the largest internet company in China.",
+                                            "default": false,
+                                            "steps": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "stepType": "choice",
+                    "label": "Select HTTP client library:",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "Apache",
+                            "description": "From Apache HttpComponents, this is the original choice of JVM HTTP client.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Java HTTP",
+                            "description": "This ultra-lightweight HTTP client comes bundled with http4k-core. Great for testing and Serverless scenarios.",
+                            "default": true,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Fuel",
+                            "description": "An HTTP client written in Kotlin that supports both sync and async API.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Helidon",
+                            "description": "Helidon Nima, the first HTTP client to be built from the ground up to take advantage of Loom Virtual Threads.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Jetty",
+                            "description": "With similar common APIs to it's server brother, this is a popular and simple to configure client.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "OkHttp",
+                            "description": "The http4k team's go-to HTTP Client. Now written in pure Kotlin.",
+                            "default": false,
+                            "steps": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "stepType": "section",
+            "label": "2. Functional modules",
+            "steps": [
+                {
+                    "stepType": "choice",
+                    "label": "Select JSON serialisation library:",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "Argo",
+                            "description": "Lightweight, no-dependencies, no reflection.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Gson",
+                            "description": "Google's auto-marshalling JSON technology. Beware it does not fully support the Kotlin type-system",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Jackson",
+                            "description": "The http4k team's pick for JSON library, and supports the Kotlin type system very well.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Klaxon",
+                            "description": "Ultra-lightweight JSON library written in pure Kotlin with auto-marshalling.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "KondorJson",
+                            "description": "Functonal JSON library written in pure Kotlin with auto-marshalling.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "KotlinX Serialization",
+                            "description": "Jetbrains' flexible serialization library.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Moshi",
+                            "description": "A Square auto-marshalling library. Note that it does not have a native JSON object model.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "None",
+                            "description": "Not required.",
+                            "default": true,
+                            "steps": []
+                        }
+                    ]
+                },
+                {
+                    "stepType": "choice",
+                    "label": "Select a templating library:",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "Freemarker",
+                            "description": "From Apache, Freemarker templates are written in the FreeMarker Template Language (FTL).",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Handlebars",
+                            "description": "Provides the power necessary to let you build semantic templates effectively with no frustration.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "JTE",
+                            "description": "Kotlin-friendly templating engine with an IntelliJ plugin",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Pebble",
+                            "description": "Pebble is a Java templating engine inspired by Twig and similar to the Python Jinja Template Engine syntax.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Pug4j",
+                            "description": "A Pug implementation written in pure Java.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Rocker",
+                            "description": "Compile-time templates make this engine go vroom!",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Thymeleaf",
+                            "description": "Thymeleaf's main goal is to bring elegant natural templates to your development workflow.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "None",
+                            "description": "Not required.",
+                            "default": true,
+                            "steps": []
+                        }
+                    ]
+                },
+                {
+                    "stepType": "multi",
+                    "label": "Select any other messaging formats used by the app:",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "Multipart form",
+                            "description": "Construct and parse mixed binary/text Multipart forms with the powerful http4k lens mechanism.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Gson XML",
+                            "description": "Shim around the Gson Json library.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Jackson XML",
+                            "description": "XML done in the imitable Jackson style!",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Jackson YAML",
+                            "description": "Super handy for configuration and interacting with K8S APIs.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Moshi YAML",
+                            "description": "Zero-reflection YAML using Moshi and SnakeYaml.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Jackson CSV",
+                            "description": "Super-easy Comma Separated Values support, including Body lenses.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "DataFrame",
+                            "description": "KotlinX DataFrame support for CSV and JSON ",
+                            "default": false,
+                            "steps": []
+                        }
+                    ]
+                },
+                {
+                    "stepType": "multi",
+                    "label": "Select any http4k core integrations that catch your eye!",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "AWS",
+                            "description": "Sign and send requests to AWS services without relying on the giga-sized AWS SDK libraries!",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "OpenApi3",
+                            "description": "Implement type-safe routing with auto-generated OpenAPI V3 specifications (including full JSON schema model generation).",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Cloud Events",
+                            "description": "Consume and send CloudEvent compatible messages with the CNCF CloudEvent SDK integration.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Typesafe Config",
+                            "description": "Use the http4k lens system to provide typesafe application configuration read from the environment.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Cloud Native extensions",
+                            "description": "Extensions for running http4k inside K8S",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Failsafe",
+                            "description": "Battle-harden your app using http4k Filters integrating with this fault tolerance library.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "GraphQL",
+                            "description": "Seamlessly integrate and serve/consume GraphQL APIs into any http4k application.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Micrometer",
+                            "description": "Instrument application performance simply and export the data to popular monitoring systems. Think SL4J but for metrics!",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "OpenTelemetry",
+                            "description": "OpenTelemetry is a CNCF project to provide a standardised platform for Distributed Tracing, Metrics and Logging.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Resilience4j",
+                            "description": "Battle-harden your app using http4k Filters integrating with the popular fault tolerance library. Circuit-breakers, Bulkheading and more!",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "OAuth2",
+                            "description": "Implement OAuth flows in http4k apps, or use pre-configured OAuth providers to connect to Google, GitHub et al.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "DigestAuth",
+                            "description": "Secure routes with Digest Authentication.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "JSON-RPC",
+                            "description": "Utilise Remote Procedure Calls (RPC) encoded in JSON, with support for auto-marshalling of messages.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Webhook",
+                            "description": "Make, sign and verify Webhook calls using the Standard Webhooks standard",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Apache Async Client",
+                            "description": "Apache HTTP agent implementation based on HttpCore NIO and HttpClient components.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Websocket Client",
+                            "description": "Blocking and non-blocking Websocket client using org.java-websocket as an underlying engine.",
+                            "default": false,
+                            "steps": []
+                        }
+                    ]
+                },
+                {
+                    "stepType": "multi",
+                    "label": "Select any http4k-connect adapters for connecting to cloud services. Most adapters have an additional an in-memory fake module for testing (see docs):",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "Amazon CloudWatch Logs",
+                            "description": "Scalable and flexible monitoring solution",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon Cognito",
+                            "description": "Secure, frictionless customer identity ",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon DynamoDb",
+                            "description": "Serverless, key-value NoSQL database",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon EventBridge",
+                            "description": "Serverless event bus",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon Evidently",
+                            "description": "Feature flagging for safer launches",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon IAM Identity Center",
+                            "description": "Fine-Grained Access Controls For Your Workforce",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon Instance Metadata",
+                            "description": "EC2 instance information",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon KMS",
+                            "description": "Fully Managed, Centralized Key Management, Digitally Sign Data, & More",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon Lambda",
+                            "description": "Event-driven, serverless computing platform",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon S3",
+                            "description": "Scalable Storage in the Cloud",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon Secrets Manager",
+                            "description": "Store, manage, and retrieve secrets",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon SES",
+                            "description": "Reach customers confidently without an on-premises SMTP",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon SNS",
+                            "description": "Fully managed Pub/Sub service for A2A and A2P messaging",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon SQS",
+                            "description": "Message queue for microservices, distributed systems, and serverless applications",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon STS",
+                            "description": "Request temporary, limited-privilege credentials for users",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Amazon SystemsManager",
+                            "description": "Secure end-to-end management solution for resources on AWS",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Kafka REST Proxy",
+                            "description": "HTTP interface to Kafka queues",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Kafka Schema Registry",
+                            "description": "Schema registry for Kafka events",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Mattermost",
+                            "description": "Secure collaboration platform for accelerating mission critical work",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "HTTP Storage",
+                            "description": "Expose http4k-connect storage over an HTTP and OpenAPI interface",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "JDBC Storage",
+                            "description": "http4k-storage implementation backed by JDBC (Exposed)",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Redis Storage",
+                            "description": "http4k-storage implementation backed by Redis",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "S3 Storage",
+                            "description": "http4k-storage implementation backed by AWS S3",
+                            "default": false,
+                            "steps": []
+                        }
+                    ]
+                },
+                {
+                    "stepType": "multi",
+                    "label": "Select any http4k-connect AI modules for connecting to AI services:",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "LangChain",
+                            "description": "Plug in http4k-connect adapters to your LangChain models",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "LmStudio",
+                            "description": "Interact with LmStudio-hosted models over HTTP",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "OpenAI",
+                            "description": "Interact with OpenAI models over HTTP",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "OpenAI Plugin SDK",
+                            "description": "Easily create OpenAI ChatGPT plugins",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Ollama",
+                            "description": "Interact with Ollama-hosted models over HTTP",
+                            "default": false,
+                            "steps": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "stepType": "section",
+            "label": "3. Testing",
+            "steps": [
+                {
+                    "stepType": "multi",
+                    "label": "Select any testing technologies to battle harden your app:",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "Approval Testing",
+                            "description": "Approval testing is a form of testing which allows the expected output of a test to be specified in a non-code but still source-controlled format, such as a text file. This is a powerful alternative to traditional assertion-based tests",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Chaos Testing",
+                            "description": "Mix in the http4k ChaosEngine to force any http4k app or client to start behaving badly. Add latency, throw Teapots, and generally stink up the place.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Hamkrest",
+                            "description": "A set of custom http4k object test matchers for the Kotlin implementation of Hamcrest. There's a reason they packaged it with Junit!",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Kotest",
+                            "description": "A set of custom http4k object test matchers for the kotest Kotlin testing library.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Playwright",
+                            "description": "Easily browser test your applications with a custom JUnit plugin.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Servirtium",
+                            "description": "SERvice-VIRTualiztion-IUM (inspired by Selenium). Record, replay and ship HTTP contracts to a Markdown format with this set of JUnit5 extensions. http4k also provides the official JVM-port of the Servirtium technology.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Strikt",
+                            "description": "A set of custom http4k assertion extensions for the Strikt Kotlin testing library.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "TracerBullet",
+                            "description": "TracerBullet is an entirely new technology allowing you to document your applications using a set of visualisations such as PlantUML or Mermaid.",
+                            "default": false,
+                            "steps": []
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "WebDriver",
+                            "description": "Ultra-lightweight in-memory Selenium WebDriver implementation for http4k apps.",
+                            "default": false,
+                            "steps": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "stepType": "section",
+            "label": "4. Application identity",
+            "steps": [
+                {
+                    "stepType": "input",
+                    "label": "Main class name",
+                    "required": true,
+                    "default": "HelloWorld"
+                },
+                {
+                    "stepType": "input",
+                    "label": "Base package name",
+                    "required": true,
+                    "default": "com.example"
+                }
+            ]
+        },
+        {
+            "stepType": "section",
+            "label": "5. Build tooling",
+            "steps": [
+                {
+                    "stepType": "choice",
+                    "label": "Select a build tool:",
+                    "options": [
+                        {
+                            "optionType": "text",
+                            "label": "Gradle",
+                            "description": "Like a giant Swiss Army knife, Gradle is the http4k team's pick of build tool.",
+                            "default": true,
+                            "steps": [
+                                {
+                                    "stepType": "choice",
+                                    "label": "Select a packaging type:",
+                                    "options": [
+                                        {
+                                            "optionType": "text",
+                                            "label": "Jar",
+                                            "description": "Standard-packaging. Puts all http4k app code in an single JAR file.",
+                                            "default": false,
+                                            "steps": []
+                                        },
+                                        {
+                                            "optionType": "text",
+                                            "label": "Jib",
+                                            "description": "Google Jib provides a clever way of layering Docker images to minimize the size. Also available with Distroless base-images.",
+                                            "default": false,
+                                            "steps": []
+                                        },
+                                        {
+                                            "optionType": "text",
+                                            "label": "ShadowJar",
+                                            "description": "Also known as Uber-Jarring, this packages the http4k app and libraries in a single JAR file.",
+                                            "default": false,
+                                            "steps": []
+                                        },
+                                        {
+                                            "optionType": "text",
+                                            "label": "Zip",
+                                            "description": "Publish http4k app and libraries into the standard Application format, along with scripts for launching.",
+                                            "default": true,
+                                            "steps": []
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "optionType": "text",
+                            "label": "Maven",
+                            "description": "Setting the standards for development, a firm favourite for building library JARs.",
+                            "default": false,
+                            "steps": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

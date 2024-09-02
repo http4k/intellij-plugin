@@ -8,9 +8,12 @@ import com.intellij.openapi.application.invokeLater
 import com.intellij.openapi.roots.ModifiableRootModel
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.vfs.LocalFileSystem
+import dev.forkhandles.result4k.flatMap
 import dev.forkhandles.result4k.get
 import dev.forkhandles.result4k.map
 import dev.forkhandles.result4k.mapFailure
+import dev.forkhandles.result4k.onFailure
+import dev.forkhandles.result4k.orThrow
 import org.http4k.intellij.step.FailedView
 import org.http4k.intellij.step.QuestionnaireStep
 import org.http4k.intellij.utils.backgroundTask
@@ -54,7 +57,10 @@ class Http4kModuleBuilder : ModuleBuilder() {
         modifiableRootModel.apply {
             addContentEntry(root)
             project.backgroundTask("Setting up project") {
-                api.generateProject(api.stackIdFor(answer.get())).unzipInto(File(root.path))
+                api.stackIdFor(answer.get())
+                    .flatMap(api::generateProject)
+                    .onFailure { it.orThrow() }
+                    .unzipInto(File(root.path))
 
                 val (clazz, pkg) = answer.get().getClassAndPackage()
                 modifiableRootModel.project.createRunConfiguration(pkg, clazz)

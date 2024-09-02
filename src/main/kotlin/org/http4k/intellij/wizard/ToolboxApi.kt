@@ -9,7 +9,6 @@ import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
 import org.http4k.core.Request
-import org.http4k.core.Status.Companion.OK
 import org.http4k.core.Uri
 import org.http4k.core.then
 import org.http4k.core.with
@@ -35,16 +34,29 @@ class ToolboxApi(
     fun questionnaire() =
         http(Request(GET, "/api/v1/project/questionnaire")).run {
             when {
-                status == OK -> Success(Body.auto<Questionnaire>().toLens()(this))
+                status.successful -> Success(Body.auto<Questionnaire>().toLens()(this))
                 else -> Failure(RemoteRequestFailed(status, bodyString()))
             }
         }
 
-    fun stackIdFor(answer: Answer): StackId {
-        val downloadUrl =
-            LOCATION(http(Request(POST, "/api/v1/project/questionnaire").with(Body.auto<Answer>().toLens() of answer)))
-        return StackId.of(downloadUrl.toString().substring(downloadUrl.toString().lastIndexOf('/') + 1))
-    }
+    fun stackIdFor(answer: Answer) =
+        http(Request(POST, "/api/v1/project/questionnaire").with(Body.auto<Answer>().toLens() of answer))
+            .run {
+                when {
+                    status.redirection -> {
+                        val downloadUrl = LOCATION(this).toString()
+                        Success(StackId.of(downloadUrl.substring(downloadUrl.lastIndexOf('/') + 1)))
+                    }
 
-    fun generateProject(stackId: StackId) = http(Request(GET, "/api/v1/stack/$stackId")).body.stream
+                    else -> Failure(RemoteRequestFailed(status, bodyString()))
+                }
+            }
+
+    fun generateProject(stackId: StackId) =
+        http(Request(GET, "/api/v1/stack/$stackId")).run {
+            when {
+                status.successful -> Success(body.stream)
+                else -> Failure(RemoteRequestFailed(status, bodyString()))
+            }
+        }
 }

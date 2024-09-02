@@ -3,17 +3,23 @@
     <id>http4k.project.wizard</id>
     <name>http4k Project Wizard</name>
     <vendor email="info@http4k.org" url="https://http4k.org">http4k</vendor>
-    <change-notes>
-        Configure your project with http4k dependencies and settings.
+
+    <change-notes><![CDATA[
+      <ul>
+        <li>0.0.1 - Initial release.</li>
+      </ul>
+    ]]>
     </change-notes>
 
-    <description>
-        Wizard for http4k based projects. Configures the project with the necessary dependencies and settings.
-    </description>
+    <description><![CDATA[
+     Wizard for <a href="https://http4k.org">http4k</a> based projects. Configures the project with the necessary dependencies and settings.
+    ]]></description>
 
     <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.gradle</depends>
+
+    <idea-version since-build="202.7660.26"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <moduleBuilder builderClass="org.http4k.intellij.Http4kModuleBuilder"/>

@@ -50,7 +50,6 @@ kotlin {
     }
 }
 
-
 intellij {
     version.set("2024.1.2")
     plugins.set(listOf("gradle", "java", "org.jetbrains.kotlin"))

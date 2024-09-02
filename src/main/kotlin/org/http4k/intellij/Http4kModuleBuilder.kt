@@ -1,12 +1,17 @@
 package org.http4k.intellij
 
 import com.intellij.ide.util.projectWizard.ModuleBuilder
+import com.intellij.ide.util.projectWizard.ModuleWizardStep
 import com.intellij.ide.util.projectWizard.WizardContext
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.invokeLater
 import com.intellij.openapi.roots.ModifiableRootModel
 import com.intellij.openapi.util.io.FileUtil
 import com.intellij.openapi.vfs.LocalFileSystem
+import dev.forkhandles.result4k.get
+import dev.forkhandles.result4k.map
+import dev.forkhandles.result4k.mapFailure
+import org.http4k.intellij.step.FailedView
 import org.http4k.intellij.step.QuestionnaireStep
 import org.http4k.intellij.utils.backgroundTask
 import org.http4k.intellij.utils.createRunConfiguration
@@ -26,10 +31,22 @@ class Http4kModuleBuilder : ModuleBuilder() {
     private val answer = AtomicReference<Answer>()
 
     override fun getCustomOptionsStep(context: WizardContext, parentDisposable: Disposable) =
-        QuestionnaireStep(api.questionnaire(), context) {
-            answer.set(it.first())
-            context.setNextTo(true)
-        }
+        api.questionnaire()
+            .map {
+                QuestionnaireStep(it, context) {
+                    answer.set(it.first())
+                    context.setNextTo(true)
+                }
+            }
+            .mapFailure {
+                object : ModuleWizardStep() {
+                    override fun getComponent() = FailedView(it)
+
+                    override fun updateDataModel() {
+                    }
+                }
+            }
+            .get()
 
     override fun setupRootModel(modifiableRootModel: ModifiableRootModel) {
         val root = createAndGetRoot() ?: return
@@ -47,7 +64,6 @@ class Http4kModuleBuilder : ModuleBuilder() {
                 }
             }
         }
-
     }
 
     private fun Answer.getClassAndPackage() =

@@ -1,11 +1,15 @@
 package org.http4k.intellij.wizard
 
+import dev.forkhandles.result4k.Failure
+import dev.forkhandles.result4k.Success
 import org.http4k.client.JavaHttpClient
+import org.http4k.cloudnative.RemoteRequestFailed
 import org.http4k.core.Body
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
 import org.http4k.core.Request
+import org.http4k.core.Status.Companion.OK
 import org.http4k.core.Uri
 import org.http4k.core.then
 import org.http4k.core.with
@@ -26,10 +30,15 @@ class ToolboxApi(
         ClientFilters.HandleRemoteRequestFailed({ status.successful || status.redirection })
             .then(SetHeader("x-http4k-client-id", clientId.value))
             .then(ClientFilters.SetHostFrom(rootUri))
-            .then(if(debug) rawHttp.debug() else rawHttp)
+            .then(if (debug) rawHttp.debug() else rawHttp)
 
     fun questionnaire() =
-        Body.auto<Questionnaire>().toLens()(http(Request(GET, "/api/v1/project/questionnaire")))
+        http(Request(GET, "/api/v1/project/questionnaire")).run {
+            when {
+                status == OK -> Success(Body.auto<Questionnaire>().toLens()(this))
+                else -> Failure(RemoteRequestFailed(status, bodyString()))
+            }
+        }
 
     fun stackIdFor(answer: Answer): StackId {
         val downloadUrl =

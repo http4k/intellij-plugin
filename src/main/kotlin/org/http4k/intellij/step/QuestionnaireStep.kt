@@ -21,4 +21,3 @@ class QuestionnaireStep(
         wizardContext.setNextTo(true)
     }
 }
-

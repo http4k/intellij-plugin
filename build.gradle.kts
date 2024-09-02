@@ -18,19 +18,12 @@ repositories {
 dependencies {
     implementation(platform(Http4k.bom))
     implementation(platform("dev.forkhandles:forkhandles-bom:_"))
-
     implementation(Http4k.core)
     implementation(Http4k.cloudnative)
     implementation(Http4k.format.jackson)
-    implementation("dev.forkhandles:values4k:_")
-    implementation("dev.forkhandles:bunting4k:_")
-
-    implementation("com.google.code.gson:gson:_")
-    implementation(ReactiveX.rxJava3)
-    implementation(ReactiveX.rxJava3.rxKotlin)
-    implementation(Square.retrofit2)
-    implementation(Square.retrofit2.adapter.rxJava3)
-    implementation(Square.retrofit2.converter.gson)
+    implementation("dev.forkhandles:values4k")
+    implementation("dev.forkhandles:result4k")
+    implementation("org.swinglabs:swingx:1.6.1")
 }
 
 tasks {

@@ -42,6 +42,10 @@ tasks {
         useJUnitPlatform()
         jvmArgs = listOf("--enable-preview")
     }
+
+    publishPlugin {
+        token = System.getenv("JETBRAINS_TOKEN")
+    }
 }
 
 kotlin {
@@ -55,3 +59,4 @@ intellij {
     plugins.set(listOf("gradle", "java", "org.jetbrains.kotlin"))
     updateSinceUntilBuild.set(false)
 }
+

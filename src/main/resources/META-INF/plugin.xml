@@ -19,7 +19,7 @@
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.gradle</depends>
 
-    <idea-version since-build="202.7660.26"/>
+    <idea-version since-build="241"/>
 
     <extensions defaultExtensionNs="com.intellij">
         <moduleBuilder builderClass="org.http4k.intellij.Http4kModuleBuilder"/>

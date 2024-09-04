@@ -25,6 +25,7 @@ fun OptionBox(control: JComponent, option: Option) = JPanel().apply {
     })
     add(Box.createHorizontalStrut(10))
     add(JTextArea(option.description).apply {
+        border = createEmptyBorder()
         lineWrap = true
         wrapStyleWord = true
         isOpaque = false

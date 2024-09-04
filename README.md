@@ -1,3 +1,4 @@
+<a href="https://plugins.jetbrains.com/plugin/25243-http4k-project-wizard">![Version](https://img.shields.io/jetbrains/plugin/v/25243-http4k-project-wizard)</a>
 <hr/>
 <img src="logo.png">
 <hr/>

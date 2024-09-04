@@ -8,6 +8,6 @@ fun WizardContext.setNextTo(enabled: Boolean) {
     SwingUtilities.invokeLater {
         val get = get()
         val newProjectWizard = get[get.keys.first { it.toString() == "AbstractWizard" }] as NewProjectWizard
-        newProjectWizard.updateButtons(false, enabled, false)
+        newProjectWizard.updateButtons(false, enabled, true)
     }
 }

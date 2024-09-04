@@ -9,7 +9,6 @@ plugins {
 }
 
 group = "org.http4k"
-version = "1.0.0"
 
 repositories {
     mavenCentral()

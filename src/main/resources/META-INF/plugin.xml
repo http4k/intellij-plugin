@@ -22,8 +22,6 @@ http4k projects by providing a user-friendly interface within the IDE and access
     <depends>org.jetbrains.kotlin</depends>
     <depends>com.intellij.gradle</depends>
 
-    <idea-version since-build="241"/>
-
     <extensions defaultExtensionNs="com.intellij">
         <moduleBuilder builderClass="org.http4k.intellij.Http4kModuleBuilder"/>
     </extensions>

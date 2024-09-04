@@ -19,7 +19,7 @@ fun OptionBox(control: JComponent, option: Option) = JPanel().apply {
 
     add(JPanel().apply {
         layout = BoxLayout(this, X_AXIS)
-        preferredSize = Dimension(250, 0)
+        preferredSize = Dimension(175, 0)
         add(control)
         add(option.label.label().bold())
     })

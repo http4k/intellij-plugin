@@ -10,7 +10,7 @@ import javax.swing.JTextField
 fun InputView(input: Step.Input, parent: JPanel, onComplete: OnComplete): JPanel {
 
     val selection = JTextField(input.default).apply {
-        columns = 30
+        columns = 25
     }
 
     val panel = QuestionPanel(input.label, true, selection)
@@ -24,7 +24,6 @@ fun InputView(input: Step.Input, parent: JPanel, onComplete: OnComplete): JPanel
         }
 
         panel.nextButton.apply {
-
             addActionListener {
                 onComplete(listOf(Answer.Text(input.label, listOf(selection.text))))
                 parent.remove(panel)

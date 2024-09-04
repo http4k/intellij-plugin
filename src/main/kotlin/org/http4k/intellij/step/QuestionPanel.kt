@@ -1,11 +1,10 @@
 package org.http4k.intellij.step
 
 import java.awt.BorderLayout
+import java.awt.BorderLayout.EAST
 import java.awt.BorderLayout.NORTH
-import java.awt.FlowLayout
-import java.awt.FlowLayout.LEFT
+import java.awt.BorderLayout.WEST
 import javax.swing.BorderFactory.createEmptyBorder
-import javax.swing.Box
 import javax.swing.JComponent
 import javax.swing.JPanel
 
@@ -16,12 +15,11 @@ class QuestionPanel(question: String, nextEnabled: Boolean, vararg intermediate:
         border = createEmptyBorder(10, 10, 10, 10)
 
         add(
-            JPanel(FlowLayout(LEFT, 10, 10)).apply {
-                add(question.label().bold())
+            JPanel(BorderLayout()).apply {
+                add(question.label().bold(), WEST)
                 intermediate.forEach(::add)
-                add(nextButton)
-            }
-        , NORTH)
-        add(Box.createVerticalStrut(10))
+                add(nextButton, EAST)
+            }, NORTH
+        )
     }
 }

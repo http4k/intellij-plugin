@@ -10,7 +10,7 @@ This plugin generates boilerplate http4k-based projects with ease by integrating
 http4k projects by providing a user-friendly interface within the IDE and access to the [http4k Toolbox](https://toolbox.http4k.org).
 
 <p align="center">
-<img src="screenshot.png" width="70%">
+<img src="screenshot1.png" width="35%">
 </p>
 
 ### How to use

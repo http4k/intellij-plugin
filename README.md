@@ -3,7 +3,11 @@
 <hr/>
 
 <p align="center">
-<a href="https://plugins.jetbrains.com/plugin/25243-http4k-project-wizard">![Version](https://img.shields.io/jetbrains/plugin/v/25243-http4k-project-wizard)</a>
+<a href="https://plugins.jetbrains.com/plugin/25243-http4k-project-wizard">
+<img src="https://img.shields.io/jetbrains/plugin/v/25243-http4k-project-wizard"/></a>
+&nbsp;
+&nbsp;
+&nbsp;
 <a href="https://plugins.jetbrains.com/plugin/25243-http4k-project-wizard"><img src="install.png" width="25%"></a>
 </p>
 

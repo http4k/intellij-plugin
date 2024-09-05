@@ -3,9 +3,10 @@
     <id>http4k.project.wizard</id>
     <name>http4k Project Wizard</name>
     <vendor email="info@http4k.org" url="https://http4k.org">http4k</vendor>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <change-notes><![CDATA[
       <ul>
+        <li>1.0.3 - Fix description of plugin</li>
         <li>1.0.2 - Update plugin icons</li>
         <li>1.0.1 - Prevent "previous" action</li>
         <li>1.0.0 - Fixed spacing of UI elements</li>
@@ -14,10 +15,11 @@
       </ul>
     ]]>
     </change-notes>
+    <icon>pluginIcon.svg</icon>
 
     <description><![CDATA[
-This plugin generates boilerplate <a href="https://http4k.org>http4k</a> based projects with ease by integrating a project wizard into IntelliJ IDEA. It streamlines the process of creating new
-http4k projects by providing a user-friendly interface within the IDE and access to the <a href="https://toolbox.http4k.org>http4k Toolbox</a>>.
+This plugin generates boilerplate http4k based projects with ease by integrating a project wizard into IntelliJ IDEA. It streamlines the process of creating new
+http4k projects by providing a user-friendly interface within the IDE.
     ]]></description>
 
     <depends>com.intellij.modules.java</depends>

@@ -3,9 +3,10 @@
     <id>http4k.project.wizard</id>
     <name>http4k Project Wizard</name>
     <vendor email="info@http4k.org" url="https://http4k.org">http4k</vendor>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <change-notes><![CDATA[
       <ul>
+        <li>1.0.4 - Fix plugin icons</li>
         <li>1.0.3 - Fix description of plugin</li>
         <li>1.0.2 - Update plugin icons</li>
         <li>1.0.1 - Prevent "previous" action</li>

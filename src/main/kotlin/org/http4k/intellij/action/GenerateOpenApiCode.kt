@@ -52,7 +52,7 @@ open class GenerateOpenApiCode(private val style: ClientApiStyle) : AnAction(), 
     }
 
     private fun updateStatusBar(project: Project, target: File) {
-        StatusBarUtil.setStatusBarInfo(project, "OpenApi clas Written to ${target.absolutePath}")
+        StatusBarUtil.setStatusBarInfo(project, "OpenApi classes written to ${target.absolutePath}")
     }
 }
 

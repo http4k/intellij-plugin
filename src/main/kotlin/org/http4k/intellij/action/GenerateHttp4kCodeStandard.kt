@@ -14,15 +14,16 @@ import dev.forkhandles.result4k.orThrow
 import org.http4k.format.Jackson
 import org.http4k.format.JacksonYaml
 import org.http4k.intellij.utils.unzipInto
+import org.http4k.intellij.wizard.ClientApiStyle
+import org.http4k.intellij.wizard.ClientApiStyle.connect
+import org.http4k.intellij.wizard.ClientApiStyle.standard
 import org.http4k.intellij.wizard.ToolboxApi
 import java.io.File
 import java.time.Clock
 import java.time.temporal.ChronoUnit.SECONDS
 
-class GenerateHttp4kCodeStandard : AnAction(), ActionUpdateThreadAware {
-
+open class GenerateHttp4kCode(private val style: ClientApiStyle) : AnAction(), ActionUpdateThreadAware {
     private val toolbox = ToolboxApi()
-
     override fun update(e: AnActionEvent) {
         val file = e.dataContext.getData(VIRTUAL_FILE)
         e.presentation.setEnabledAndVisible(file?.fileIsOpenApiSpec() ?: false)
@@ -32,12 +33,16 @@ class GenerateHttp4kCodeStandard : AnAction(), ActionUpdateThreadAware {
 
     override fun actionPerformed(e: AnActionEvent) {
         val file = e.dataContext.getData(VIRTUAL_FILE) ?: return
-        val target = File(File(e.project!!.basePath, "http4k"),
+        val http4kDir = File(e.project!!.basePath, ".http4k")
+        val openApiDir = File(http4kDir, "openapi")
+
+        val target = File(
+            openApiDir,
             file.name + "-generated-" +
                 Clock.systemUTC().instant().truncatedTo(SECONDS).toString().filter { it.isLetterOrDigit() }
         ).apply { mkdirs() }
 
-        toolbox.generateOpenApiClasses(file.inputStream)
+        toolbox.generateOpenApiClasses(style, file.inputStream)
             .onFailure { it.orThrow() }
             .unzipInto(target)
 
@@ -47,9 +52,12 @@ class GenerateHttp4kCodeStandard : AnAction(), ActionUpdateThreadAware {
     }
 
     private fun updateStatusBar(project: Project, target: File) {
-        StatusBarUtil.setStatusBarInfo(project, "OpenApi classes Written to ${target.absolutePath}")
+        StatusBarUtil.setStatusBarInfo(project, "OpenApi clas Written to ${target.absolutePath}")
     }
 }
+
+class GenerateHttp4kCodeStandard : GenerateHttp4kCode(standard)
+class GenerateHttp4kCodeConnect : GenerateHttp4kCode(connect)
 
 private fun VirtualFile.fileIsOpenApiSpec(): Boolean {
     if (!(name.endsWith(".json") || name.endsWith(".yaml"))) return false

@@ -68,10 +68,11 @@ class ToolboxApi(
             }
         }
 
-    fun generateOpenApiClasses(inputStream: InputStream): Result<InputStream, RemoteRequestFailed> {
+    fun generateOpenApiClasses(clientApiStyle: ClientApiStyle , inputStream: InputStream): Result<InputStream, RemoteRequestFailed> {
+        val style = MultipartFormField.required("clientApiStyle")
         val field = MultipartFormField.required("packageName")
         val file = MultipartFormFile.required("specification")
-        val form = Body.multipartForm(Strict, field, file).toLens()
+        val form = Body.multipartForm(Strict, field, file, style).toLens()
 
         return http(
             Request(POST, "/api/v1/openapi/file")
@@ -79,6 +80,7 @@ class ToolboxApi(
                     form of MultipartForm()
                         .with(
                             field of MultipartFormField("com.example"),
+                            style of MultipartFormField(clientApiStyle.name),
                             file of MultipartFormFile("", OCTET_STREAM, inputStream)
                         )
                 )
@@ -89,4 +91,8 @@ class ToolboxApi(
             }
         }
     }
+}
+
+enum class ClientApiStyle {
+    standard, connect
 }

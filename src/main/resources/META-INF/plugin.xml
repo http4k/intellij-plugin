@@ -50,7 +50,7 @@ http4k projects by providing a user-friendly interface within the IDE.
         </action>
 
         <action id="generate_http4k_connect"
-                class="org.http4k.intellij.action.GenerateHttp4kCodeStandard"
+                class="org.http4k.intellij.action.GenerateHttp4kCodeConnect"
                 text="With http4k-connect client"
                 description="Generate http4k server, client and model code from OpenAPI spec"
                 icon="/images/http4k.png">

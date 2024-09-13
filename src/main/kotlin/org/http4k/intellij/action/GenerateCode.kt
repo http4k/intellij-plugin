@@ -27,7 +27,7 @@ import java.time.temporal.ChronoUnit.SECONDS
 abstract class GenerateCode(private val functionName: String) : AnAction(), ActionUpdateThreadAware {
     override fun update(e: AnActionEvent) {
         val file = e.dataContext.getData(VIRTUAL_FILE)
-        e.presentation.setEnabledAndVisible(file?.fileIsOpenApiSpec() ?: false)
+        e.presentation.setEnabledAndVisible(activeFor(file))
     }
 
     override fun getActionUpdateThread() = BGT
@@ -57,22 +57,29 @@ abstract class GenerateCode(private val functionName: String) : AnAction(), Acti
     private fun updateStatusBar(project: Project, target: File) {
         StatusBarUtil.setStatusBarInfo(project, "OpenApi classes written to ${target.absolutePath}")
     }
+
+    abstract fun activeFor(selected: VirtualFile?): Boolean
+
 }
 
 class GenerateOpenApiCodeStandard : GenerateCode("openapi") {
     override fun VirtualFile.generateCode() =
         ToolboxApi().generateOpenApiClasses(standard, inputStream)
+
+    override fun activeFor(selected: VirtualFile?) = isOpenApi(selected)
 }
 
 class GenerateOpenApiCodeConnect : GenerateCode("openapi") {
     override fun VirtualFile.generateCode() =
         ToolboxApi().generateOpenApiClasses(connect, inputStream)
+
+    override fun activeFor(selected: VirtualFile?) = isOpenApi(selected)
 }
 
-private fun VirtualFile.fileIsOpenApiSpec(): Boolean {
-    if (!(name.endsWith(".json") || name.endsWith(".yaml"))) return false
+private fun isOpenApi(file: VirtualFile?): Boolean {
+    if (file == null || !(file.name.endsWith(".json") || file.name.endsWith(".yaml"))) return false
     else {
-        val content = inputStream.reader().readText() ?: ""
+        val content = file.inputStream.reader().readText() ?: ""
         return try {
             Jackson.asA<Map<String, Any>>(content)
         } catch (e: Exception) {

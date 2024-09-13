@@ -66,6 +66,7 @@ class Http4kModuleBuilder : ModuleBuilder() {
                 modifiableRootModel.project.createRunConfiguration(pkg, clazz)
                 GradleAutoImportAware()
                 invokeLater {
+                    // TODO - replace when removed with: linkAndSyncGradleProject(root.canonicalPath + "/build.gradle", project)
                     linkAndRefreshGradleProject(root.canonicalPath + "/build.gradle.kts", project)
                 }
             }

@@ -25,8 +25,10 @@
 This plugin streamlines the process of working with http4k projects by providing a user-friendly functionality within the IDE. It:
 
 - generates boilerplate http4k based projects with ease by integrating a project wizard into IntelliJ IDEA.
-- generates http4k server, client and model code from OpenAPI spec. Right click on the file and select New -> http4k -> OpenAPI to http4k.
-- generates data classes from JSON/YAML files. Right click on the file and select New -> http4k -> Dataclasses.
+- **generates http4k server, client and model code from OpenAPI spec. Right click on the file and select New -> http4k -> OpenAPI to http4k.
+- **generates data classes from JSON/YAML files. Right click on the file and select New -> http4k -> Dataclasses.
+
+**Note that these functions sends the contents of the file to the stateless http4k Toolbox server for processing.
     ]]></description>
 
     <depends>com.intellij.modules.java</depends>

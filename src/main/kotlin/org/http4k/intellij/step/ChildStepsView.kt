@@ -6,7 +6,7 @@ import java.awt.GridBagLayout
 import java.util.concurrent.atomic.AtomicReference
 import javax.swing.JPanel
 
-fun ChildStepsView(steps: List<Step>, parent: JPanel, onComplete: OnComplete): JPanel {
+fun ChildStepsView(steps: List<Step>, parent: JPanel, onReset: OnReset, onComplete: OnComplete): JPanel {
     val allAnswers = mutableListOf<Answer>()
     val callback = AtomicReference<OnComplete>()
 
@@ -20,12 +20,12 @@ fun ChildStepsView(steps: List<Step>, parent: JPanel, onComplete: OnComplete): J
                 onComplete(allAnswers)
             }
 
-            else -> panel.addMax(StepView(steps[allAnswers.size], panel, callback.get()))
+            else -> panel.addMax(StepView(steps[allAnswers.size], panel, onReset, callback.get()))
         }
         parent.revalidate()
     }
 
     return panel.apply {
-        addMax(StepView(steps.first(), panel, callback.get()))
+        addMax(StepView(steps.first(), panel, onReset, callback.get()))
     }
 }

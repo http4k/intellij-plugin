@@ -7,9 +7,9 @@ import javax.swing.BoxLayout.Y_AXIS
 import javax.swing.JCheckBox
 import javax.swing.JPanel
 
-fun MultiChoiceView(multiChoice: Step.MultiChoice, parent: JPanel, onComplete: OnComplete): JPanel {
+fun MultiChoiceView(multiChoice: Step.MultiChoice, parent: JPanel, onReset: OnReset, onComplete: OnComplete): JPanel {
 
-    val panel = QuestionPanel(multiChoice.label, true)
+    val panel = QuestionPanel(multiChoice.label, true, onReset)
 
     return panel.apply {
         val selected = multiChoice.options.filter { it.default }.toMutableSet()

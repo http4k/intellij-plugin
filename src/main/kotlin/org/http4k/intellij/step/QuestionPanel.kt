@@ -8,7 +8,7 @@ import javax.swing.BorderFactory.createEmptyBorder
 import javax.swing.JComponent
 import javax.swing.JPanel
 
-class QuestionPanel(question: String, nextEnabled: Boolean, vararg intermediate: JComponent) : JPanel(BorderLayout()) {
+class QuestionPanel(question: String, nextEnabled: Boolean, onReset: OnReset, vararg intermediate: JComponent) : JPanel(BorderLayout()) {
     val nextButton = NextButton(nextEnabled)
 
     init {
@@ -18,7 +18,10 @@ class QuestionPanel(question: String, nextEnabled: Boolean, vararg intermediate:
             JPanel(BorderLayout()).apply {
                 add(question.label().bold(), WEST)
                 intermediate.forEach(::add)
-                add(nextButton, EAST)
+                add(JPanel().apply {
+                    add(nextButton)
+                    add(ResetButton(onReset))
+                }, EAST)
             }, NORTH
         )
     }

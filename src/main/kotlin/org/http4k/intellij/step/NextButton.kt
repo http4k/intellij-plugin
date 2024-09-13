@@ -9,3 +9,4 @@ class NextButton(enabledByDefault: Boolean = false) : JButton("Next") {
         }
     }
 }
+

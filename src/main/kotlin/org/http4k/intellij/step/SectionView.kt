@@ -13,7 +13,7 @@ import javax.swing.BoxLayout.Y_AXIS
 import javax.swing.JPanel
 import javax.swing.border.TitledBorder.DEFAULT_POSITION
 
-fun SectionView(section: Step.Section, parent: JPanel, onComplete: OnComplete): JPanel {
+fun SectionView(section: Step.Section, parent: JPanel, onReset: OnReset, onComplete: OnComplete): JPanel {
     val panel = JPanel().apply {
         layout = BoxLayout(this, Y_AXIS)
         border = BorderFactory.createCompoundBorder(
@@ -28,7 +28,7 @@ fun SectionView(section: Step.Section, parent: JPanel, onComplete: OnComplete): 
     }
 
     return panel.apply {
-        add(ChildStepsView(section.steps, parent) {
+        add(ChildStepsView(section.steps, parent, onReset) {
             parent.remove(this)
             onComplete(listOf(Answer.Step(section.label, steps = it)))
         })

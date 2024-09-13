@@ -7,13 +7,13 @@ import java.awt.event.KeyEvent
 import javax.swing.JPanel
 import javax.swing.JTextField
 
-fun InputView(input: Step.Input, parent: JPanel, onComplete: OnComplete): JPanel {
+fun InputView(input: Step.Input, parent: JPanel, onReset: OnReset, onComplete: OnComplete): JPanel {
 
     val selection = JTextField(input.default).apply {
         columns = 25
     }
 
-    val panel = QuestionPanel(input.label, true, selection)
+    val panel = QuestionPanel(input.label, true, onReset, selection)
     return panel.apply {
         selection.apply {
             addKeyListener(object : KeyAdapter() {

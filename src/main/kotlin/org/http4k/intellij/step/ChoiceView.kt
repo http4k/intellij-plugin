@@ -9,11 +9,11 @@ import javax.swing.ButtonGroup
 import javax.swing.JPanel
 import javax.swing.JRadioButton
 
-fun ChoiceView(choice: Step.Choice, parent: JPanel, onComplete: OnComplete): JPanel {
+fun ChoiceView(choice: Step.Choice, parent: JPanel, onReset: OnReset, onComplete: OnComplete): JPanel {
     val childAnswers = mutableListOf<Answer>()
     var selected = choice.options.first { it.default }
 
-    val panel = QuestionPanel(choice.label, false)
+    val panel = QuestionPanel(choice.label, false, onReset)
 
     panel.nextButton.apply {
         addActionListener {
@@ -21,7 +21,7 @@ fun ChoiceView(choice: Step.Choice, parent: JPanel, onComplete: OnComplete): JPa
                 selected.steps.isEmpty() ->
                     onComplete(choice.answersFor(selected, childAnswers))
 
-                else -> parent.addMax(ChildStepsView(selected.steps, parent) {
+                else -> parent.addMax(ChildStepsView(selected.steps, parent, onReset) {
                     onComplete(choice.answersFor(selected, childAnswers.toList() + it))
                 })
             }

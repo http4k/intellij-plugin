@@ -20,6 +20,8 @@ dependencies {
     implementation(Http4k.core)
     implementation(Http4k.cloudnative)
     implementation(Http4k.format.jackson)
+    implementation(Http4k.format.jacksonYaml)
+    implementation(Http4k.multipart)
     implementation("dev.forkhandles:values4k")
     implementation("dev.forkhandles:result4k")
     implementation("org.swinglabs:swingx:1.6.1")

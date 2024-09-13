@@ -1,10 +1,12 @@
 package org.http4k.intellij.wizard
 
 import dev.forkhandles.result4k.Failure
+import dev.forkhandles.result4k.Result
 import dev.forkhandles.result4k.Success
 import org.http4k.client.JavaHttpClient
 import org.http4k.cloudnative.RemoteRequestFailed
 import org.http4k.core.Body
+import org.http4k.core.ContentType.Companion.OCTET_STREAM
 import org.http4k.core.HttpHandler
 import org.http4k.core.Method.GET
 import org.http4k.core.Method.POST
@@ -18,12 +20,18 @@ import org.http4k.filter.RequestFilters.SetHeader
 import org.http4k.filter.debug
 import org.http4k.format.Jackson.auto
 import org.http4k.lens.Header.LOCATION
+import org.http4k.lens.MultipartForm
+import org.http4k.lens.MultipartFormField
+import org.http4k.lens.MultipartFormFile
+import org.http4k.lens.Validator.Strict
+import org.http4k.lens.multipartForm
+import java.io.InputStream
 
 class ToolboxApi(
     rawHttp: HttpHandler = JavaHttpClient(),
     rootUri: Uri = Uri.of("https://intellij.http4k.org"),
     clientId: ClientId = ClientId.of("intellij_plugin"),
-    debug: Boolean
+    debug: Boolean = false
 ) {
     private val http =
         ClientFilters.HandleRemoteRequestFailed({ status.successful || status.redirection })
@@ -59,4 +67,26 @@ class ToolboxApi(
                 else -> Failure(RemoteRequestFailed(status, bodyString()))
             }
         }
+
+    fun generateOpenApiClasses(inputStream: InputStream): Result<InputStream, RemoteRequestFailed> {
+        val field = MultipartFormField.required("packageName")
+        val file = MultipartFormFile.required("specification")
+        val form = Body.multipartForm(Strict, field, file).toLens()
+
+        return http(
+            Request(POST, "/api/v1/openapi/file")
+                .with(
+                    form of MultipartForm()
+                        .with(
+                            field of MultipartFormField("com.example"),
+                            file of MultipartFormFile("", OCTET_STREAM, inputStream)
+                        )
+                )
+        ).run {
+            when {
+                status.successful -> Success(body.stream)
+                else -> Failure(RemoteRequestFailed(status, bodyString()))
+            }
+        }
+    }
 }

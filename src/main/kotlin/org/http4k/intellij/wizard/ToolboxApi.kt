@@ -19,12 +19,16 @@ import org.http4k.filter.HandleRemoteRequestFailed
 import org.http4k.filter.RequestFilters.SetHeader
 import org.http4k.filter.debug
 import org.http4k.format.Jackson.auto
+import org.http4k.lens.FormField
 import org.http4k.lens.Header.LOCATION
 import org.http4k.lens.MultipartForm
 import org.http4k.lens.MultipartFormField
 import org.http4k.lens.MultipartFormFile
 import org.http4k.lens.Validator.Strict
+import org.http4k.lens.WebForm
+import org.http4k.lens.enum
 import org.http4k.lens.multipartForm
+import org.http4k.lens.webForm
 import java.io.InputStream
 
 class ToolboxApi(
@@ -91,6 +95,35 @@ class ToolboxApi(
             }
         }
     }
+
+    fun generateDataClasses(generatorFormat: GeneratorFormat, inputStream: InputStream): Result<InputStream, RemoteRequestFailed> {
+        val formatLens = FormField.enum<GeneratorFormat>().required("format")
+        val inputLens = FormField.required("input")
+        val packageNameLens = FormField.required("packageName")
+        val formLens = Body.webForm(Strict, inputLens, formatLens, packageNameLens).toLens()
+
+        val readText = inputStream.reader().readText()
+        return http(
+            Request(POST, "/api/v1/dataclass/file")
+                .with(
+                    formLens of WebForm()
+                        .with(
+                            packageNameLens of "example",
+                            formatLens of generatorFormat,
+                            inputLens of readText
+                        )
+                )
+        ).run {
+            when {
+                status.successful -> Success(body.stream)
+                else -> Failure(RemoteRequestFailed(status, bodyString()))
+            }
+        }
+    }
+}
+
+enum class GeneratorFormat {
+    json, yaml
 }
 
 enum class ClientApiStyle {

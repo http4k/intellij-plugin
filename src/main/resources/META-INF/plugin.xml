@@ -22,8 +22,11 @@
     </change-notes>
 
     <description><![CDATA[
-This plugin generates boilerplate http4k based projects with ease by integrating a project wizard into IntelliJ IDEA. It streamlines the process of creating new
-http4k projects by providing a user-friendly interface within the IDE.
+This plugin streamlines the process of working with http4k projects by providing a user-friendly functionality within the IDE. It:
+
+- generates boilerplate http4k based projects with ease by integrating a project wizard into IntelliJ IDEA.
+- generates http4k server, client and model code from OpenAPI spec. Right click on the file and select New -> http4k -> OpenAPI to http4k.
+- generates data classes from JSON/YAML files. Right click on the file and select New -> http4k -> Dataclasses.
     ]]></description>
 
     <depends>com.intellij.modules.java</depends>

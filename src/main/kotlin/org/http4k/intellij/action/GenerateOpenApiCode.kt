@@ -22,7 +22,7 @@ import java.io.File
 import java.time.Clock
 import java.time.temporal.ChronoUnit.SECONDS
 
-open class GenerateHttp4kCode(private val style: ClientApiStyle) : AnAction(), ActionUpdateThreadAware {
+open class GenerateOpenApiCode(private val style: ClientApiStyle) : AnAction(), ActionUpdateThreadAware {
     private val toolbox = ToolboxApi()
     override fun update(e: AnActionEvent) {
         val file = e.dataContext.getData(VIRTUAL_FILE)
@@ -56,8 +56,8 @@ open class GenerateHttp4kCode(private val style: ClientApiStyle) : AnAction(), A
     }
 }
 
-class GenerateHttp4kCodeStandard : GenerateHttp4kCode(standard)
-class GenerateHttp4kCodeConnect : GenerateHttp4kCode(connect)
+class GenerateOpenApiCodeStandard : GenerateOpenApiCode(standard)
+class GenerateOpenApiCodeConnect : GenerateOpenApiCode(connect)
 
 private fun VirtualFile.fileIsOpenApiSpec(): Boolean {
     if (!(name.endsWith(".json") || name.endsWith(".yaml"))) return false

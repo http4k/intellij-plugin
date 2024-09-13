@@ -34,28 +34,30 @@ http4k projects by providing a user-friendly interface within the IDE.
     </extensions>
 
     <actions>
-        <group id="http4k-menu" popup="true" text="http4k Server/Client/Models"></group>
+        <group id="open-api-menu" popup="true" text="OpenAPI to http4k" icon="/images/http4k.png"></group>
 
-        <group id="http4k-new-group">
+        <group id="http4k-menu" popup="true" text="http4k" icon="/images/http4k.png">
+            <reference ref="open-api-menu"/>
+        </group>
+
+        <group id="http4k-new-group" icon="/images/http4k.png">
             <reference ref="http4k-menu"/>
             <separator/>
             <add-to-group group-id="NewGroup" anchor="last"/>
         </group>
 
         <action id="generate_http4k_standard"
-                class="org.http4k.intellij.action.GenerateHttp4kCodeStandard"
-                text="With standard client"
-                description="Generate http4k server, client and model code from OpenAPI spec"
-                icon="/images/http4k.png">
-            <add-to-group group-id="http4k-menu" anchor="last"/>
+                class="org.http4k.intellij.action.GenerateOpenApiCodeStandard"
+                text="... with standard client"
+                description="Generate http4k server, client and model code from OpenAPI spec">
+            <add-to-group group-id="open-api-menu" anchor="last"/>
         </action>
 
         <action id="generate_http4k_connect"
-                class="org.http4k.intellij.action.GenerateHttp4kCodeConnect"
-                text="With http4k-connect client"
-                description="Generate http4k server, client and model code from OpenAPI spec"
-                icon="/images/http4k.png">
-            <add-to-group group-id="http4k-menu" anchor="last"/>
+                class="org.http4k.intellij.action.GenerateOpenApiCodeConnect"
+                text="... with http4k-connect client"
+                description="Generate http4k server, client and model code from OpenAPI spec">
+            <add-to-group group-id="open-api-menu" anchor="last"/>
         </action>
     </actions>
 </idea-plugin>

@@ -102,6 +102,15 @@ class GenerateDataClasses : GenerateCode("dataclasses") {
     override fun activeFor(selected: VirtualFile?) = selected?.supportedFormat() != null
 }
 
+class GenerateData4kClasses : GenerateCode("data4k") {
+    override fun VirtualFile.generateCode(): Result<InputStream, RemoteRequestFailed> {
+        val format = supportedFormat() ?: return Failure(RemoteRequestFailed(BAD_REQUEST, "Unsupported format"))
+        return ToolboxApi().generateData4kClasses(format, inputStream)
+    }
+
+    override fun activeFor(selected: VirtualFile?) = selected?.supportedFormat() == GeneratorFormat.json
+}
+
 private fun VirtualFile.supportedFormat() = resultFrom {
     GeneratorFormat.valueOf(name.substringAfterLast("."))
 }.valueOrNull()

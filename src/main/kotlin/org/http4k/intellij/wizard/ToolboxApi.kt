@@ -120,6 +120,31 @@ class ToolboxApi(
             }
         }
     }
+
+    fun generateData4kClasses(generatorFormat: GeneratorFormat, inputStream: InputStream): Result<InputStream, RemoteRequestFailed> {
+        val formatLens = FormField.enum<GeneratorFormat>().required("format")
+        val inputLens = FormField.required("input")
+        val packageNameLens = FormField.required("packageName")
+        val formLens = Body.webForm(Strict, inputLens, formatLens, packageNameLens).toLens()
+
+        val readText = inputStream.reader().readText()
+        return http(
+            Request(POST, "/api/v1/data4k/file")
+                .with(
+                    formLens of WebForm()
+                        .with(
+                            packageNameLens of "example",
+                            formatLens of generatorFormat,
+                            inputLens of readText
+                        )
+                )
+        ).run {
+            when {
+                status.successful -> Success(body.stream)
+                else -> Failure(RemoteRequestFailed(status, bodyString()))
+            }
+        }
+    }
 }
 
 enum class GeneratorFormat {

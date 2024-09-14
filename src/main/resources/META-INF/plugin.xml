@@ -3,7 +3,7 @@
     <id>http4k.project.wizard</id>
     <name>http4k Toolbox</name>
     <vendor email="info@http4k.org" url="https://http4k.org">http4k</vendor>
-    <version>1.3.0</version>
+    <version>1.4.0</version>
     <change-notes><![CDATA[
       <ul>
         <li>1.4.0 - Add generation of data4k wrapper classes from JSON files</li>

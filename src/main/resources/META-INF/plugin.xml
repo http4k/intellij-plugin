@@ -1,7 +1,7 @@
 <idea-plugin>
     <idea-version since-build="241"/>
     <id>http4k.project.wizard</id>
-    <name>http4k Project Wizard</name>
+    <name>http4k Toolbox</name>
     <vendor email="info@http4k.org" url="https://http4k.org">http4k</vendor>
     <version>1.3.0</version>
     <change-notes><![CDATA[
@@ -22,13 +22,17 @@
     </change-notes>
 
     <description><![CDATA[
-This plugin streamlines the process of working with http4k projects by providing a user-friendly functionality within the IDE. It:
+This plugin streamlines the process of working with <a href="https://http4k.org">http4k</a> projects by providing a user-friendly functionality within the IDE.
+<br>
+It:
+<ul>
+<li>generates boilerplate http4k based projects with ease by integrating a project wizard into IntelliJ IDEA</li>
+<li>**generates http4k server, client and model code from <a href="https://www.openapis.org/">OpenAPI</a> spec. Right click on the file and select <b>New -> http4k -> OpenAPI to http4k</b></li>
+<li>**generates data classes from JSON/YAML files. Right click on the file and select <b>New -> http4k -> Dataclasses</b></li>
+</ul>
+<br/>
 
-- generates boilerplate http4k based projects with ease by integrating a project wizard into IntelliJ IDEA.
-- **generates http4k server, client and model code from OpenAPI spec. Right click on the file and select New -> http4k -> OpenAPI to http4k.
-- **generates data classes from JSON/YAML files. Right click on the file and select New -> http4k -> Dataclasses.
-
-**Note that these functions sends the contents of the file to the stateless http4k Toolbox server for processing.
+<b>**Note that these functions sends the contents of the file to the stateless http4k Toolbox server for processing.</b>
     ]]></description>
 
     <depends>com.intellij.modules.java</depends>

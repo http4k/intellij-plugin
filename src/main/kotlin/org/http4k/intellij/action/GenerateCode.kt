@@ -10,9 +10,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.guessProjectDir
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
+import com.intellij.openapi.vfs.readText
 import com.intellij.openapi.wm.impl.status.StatusBarUtil
 import dev.forkhandles.result4k.Failure
 import dev.forkhandles.result4k.Result
+import dev.forkhandles.result4k.map
 import dev.forkhandles.result4k.onFailure
 import dev.forkhandles.result4k.orThrow
 import dev.forkhandles.result4k.resultFrom
@@ -26,10 +28,15 @@ import org.http4k.intellij.wizard.ClientApiStyle.connect
 import org.http4k.intellij.wizard.ClientApiStyle.standard
 import org.http4k.intellij.wizard.GeneratorFormat
 import org.http4k.intellij.wizard.ToolboxApi
+import java.io.BufferedOutputStream
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.InputStream
 import java.time.Clock
 import java.time.temporal.ChronoUnit.SECONDS
+import java.util.zip.ZipEntry
+import java.util.zip.ZipOutputStream
 
 abstract class GenerateCode(private val functionName: String) : AnAction(), ActionUpdateThreadAware {
     override fun update(e: AnActionEvent) {
@@ -40,7 +47,7 @@ abstract class GenerateCode(private val functionName: String) : AnAction(), Acti
     override fun getActionUpdateThread() = BGT
 
     override fun actionPerformed(e: AnActionEvent) {
-        val project = e.project  ?: return
+        val project = e.project ?: return
         val file = e.dataContext.getData(VIRTUAL_FILE) ?: return
         val http4kDir = File(project.basePath, ".http4k")
         val functionDir = File(http4kDir, functionName)
@@ -100,6 +107,25 @@ class GenerateDataClasses : GenerateCode("dataclasses") {
     }
 
     override fun activeFor(selected: VirtualFile?) = selected?.supportedFormat() != null
+}
+
+class GenerateMessageCode : GenerateCode("http") {
+    override fun VirtualFile.generateCode() =
+        ToolboxApi().generateMessage(inputStream)
+            .map {
+                val outputStream = ByteArrayOutputStream()
+                ZipOutputStream(BufferedOutputStream(outputStream)).use { out ->
+                    with(out) {
+                        putNextEntry(ZipEntry("message.kt"))
+                        write(it.readBytes())
+                    }
+                }
+                ByteArrayInputStream(outputStream.toByteArray())
+            }
+
+    override fun activeFor(selected: VirtualFile?) =
+        (selected?.name?.endsWith(".http") ?: true) &&
+        selected?.readText()?.contains("HTTP/") == true
 }
 
 class GenerateData4kClasses : GenerateCode("data4k") {

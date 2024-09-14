@@ -72,6 +72,14 @@ class ToolboxApi(
             }
         }
 
+    fun generateMessage(content: InputStream) =
+        http(Request(POST, "/api/v1/message").body(content)).run {
+            when {
+                status.successful -> Success(body.stream)
+                else -> Failure(RemoteRequestFailed(status, bodyString()))
+            }
+        }
+
     fun generateOpenApiClasses(clientApiStyle: ClientApiStyle , inputStream: InputStream): Result<InputStream, RemoteRequestFailed> {
         val style = MultipartFormField.required("clientApiStyle")
         val field = MultipartFormField.required("packageName")

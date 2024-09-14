@@ -22,18 +22,21 @@
     </change-notes>
 
     <description><![CDATA[
-This plugin streamlines the process of working with <a href="https://http4k.org">http4k</a> projects by providing a user-friendly functionality within the IDE.
+This plugin streamlines the process of working with <a href="https://http4k.org"><b>http4k</b></a> projects by providing a user-friendly functionality within the IDE.
 <br>
 It:
 <ul>
-<li>generates boilerplate http4k based projects with ease by integrating a project wizard into IntelliJ IDEA</li>
-<li>**generates http4k server, client and model code from <a href="https://www.openapis.org/">OpenAPI</a> spec. Right click on the file and select <b>New -> http4k -> OpenAPI to http4k</b></li>
-<li>**generates data classes from JSON/YAML files. Right click on the file and select <b>New -> http4k -> Dataclasses</b></li>
+    <li>generates boilerplate http4k based projects with ease by integrating a dynamic wizard into IntelliJ IDEA <b>New Project</b> option</li>
+    <li>*generates http4k server, client and model code from <a href="https://www.openapis.org/">OpenAPI</a> spec. Right click on the file and select <b>New -> http4k -> OpenAPI to http4k</b></li>
+    <li>*generates data classes from JSON/YAML files. Right click on the file and select <b>New -> http4k -> Dataclasses</b></li>
 </ul>
 <br/>
 
-<b>**Note that these functions sends the contents of the file to the stateless http4k Toolbox server for processing.</b>
-    ]]></description>
+<b>*Note that these functions sends the contents of the file to the stateless <a href="https://toolboc.http4k.org">http4k Toolbox</a> server for processing.</b>
+
+<br/>
+All generated code is added to the project in the `.http4k` directory structure added to the root of the project. We recommend you add this project to your .gitignore file.
+]]></description>
 
     <depends>com.intellij.modules.java</depends>
     <depends>org.jetbrains.kotlin</depends>

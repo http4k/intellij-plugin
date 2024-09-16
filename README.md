@@ -3,8 +3,8 @@
 <hr/>
 
 <p align="center">
-<a href="https://plugins.jetbrains.com/plugin/25243-http4k-project-wizard">
-<img src="https://img.shields.io/jetbrains/plugin/v/25243-http4k-project-wizard"/></a>
+<a href="https://plugins.jetbrains.com/plugin/25243-http4k-toolbox">
+<img src="https://img.shields.io/jetbrains/plugin/v/25243-http4k-toolbox"/></a>
 &nbsp;
 &nbsp;
 &nbsp;

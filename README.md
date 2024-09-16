@@ -31,11 +31,23 @@ The generated project will be fully functional, including template tests and a r
 The plugin provides a user-friendly interface to generate http4k code from an OpenAPI spec file. It supports both JSON and YAML formats.
 
 #### How to use
-Right click on the JSON or YAML file and select <b>New -> http4k -> OpenAPI to http4k</b>
+Right click on a JSON or YAML file and select <b>New -> http4k -> OpenAPI to http4k</b>
 
 
 ### Generate data class models from JSON or YAML
 The plugin provides a user-friendly interface to generate dataclass code from JSON and YAML files.</b>
 
 #### How to use
-Right click on the JSON or YAML file and select <b>New -> http4k -> Dataclasses</b>
+Right click on a JSON or YAML file and select <b>New -> http4k -> Dataclasses</b>
+
+### Generate data4k class models from JSON or YAML
+The plugin provides a user-friendly interface to generate <a href="https://github.com/fork-handles/forkhandles/tree/trunk/data4k">data4k</a> wrapper code from JSON and YAML files.</b>
+
+#### How to use
+Right click on a JSON file and select <b>New -> http4k -> Dataclasses</b>
+
+### Generate http4k request/response code from  a `.http` file
+The plugin provides a user-friendly interface to generate Kotlin http4k HTTP message builder code from raw HTTP requests or responses.
+
+#### How to use
+Right click on a `.http` file and select <b>New -> http4k -> HTTP Request/Response</b>

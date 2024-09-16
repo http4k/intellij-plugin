@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-rootProject.name = "http4k-intellij-project-wizard"
+rootProject.name = "http4k-intellij-plugin"
 
 plugins {
     id("de.fayard.refreshVersions").version("0.60.5")

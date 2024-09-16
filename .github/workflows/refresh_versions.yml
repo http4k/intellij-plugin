@@ -5,7 +5,7 @@ name: Refresh Dependencies
 on:
   workflow_dispatch:
   schedule:
-    - cron: '5 12 * * 1'
+    - cron: '0 8 * * 1'
 
 jobs:
   refresh-versions:

@@ -26,7 +26,6 @@ import org.http4k.lens.MultipartFormField
 import org.http4k.lens.MultipartFormFile
 import org.http4k.lens.Validator.Strict
 import org.http4k.lens.WebForm
-import org.http4k.lens.enum
 import org.http4k.lens.multipartForm
 import org.http4k.lens.webForm
 import java.io.InputStream
@@ -105,7 +104,7 @@ class ToolboxApi(
     }
 
     fun generateDataClasses(generatorFormat: GeneratorFormat, inputStream: InputStream): Result<InputStream, RemoteRequestFailed> {
-        val formatLens = FormField.enum<GeneratorFormat>().required("format")
+        val formatLens = FormField.required("format")
         val inputLens = FormField.required("input")
         val packageNameLens = FormField.required("packageName")
         val formLens = Body.webForm(Strict, inputLens, formatLens, packageNameLens).toLens()
@@ -117,7 +116,7 @@ class ToolboxApi(
                     formLens of WebForm()
                         .with(
                             packageNameLens of "example",
-                            formatLens of generatorFormat,
+                            formatLens of generatorFormat.extension,
                             inputLens of readText
                         )
                 )
@@ -130,7 +129,7 @@ class ToolboxApi(
     }
 
     fun generateData4kClasses(generatorFormat: GeneratorFormat, inputStream: InputStream): Result<InputStream, RemoteRequestFailed> {
-        val formatLens = FormField.enum<GeneratorFormat>().required("format")
+        val formatLens = FormField.required("format")
         val inputLens = FormField.required("input")
         val packageNameLens = FormField.required("packageName")
         val formLens = Body.webForm(Strict, inputLens, formatLens, packageNameLens).toLens()
@@ -142,7 +141,7 @@ class ToolboxApi(
                     formLens of WebForm()
                         .with(
                             packageNameLens of "example",
-                            formatLens of generatorFormat,
+                            formatLens of generatorFormat.extension,
                             inputLens of readText
                         )
                 )
@@ -155,8 +154,8 @@ class ToolboxApi(
     }
 }
 
-enum class GeneratorFormat {
-    json, yaml
+enum class GeneratorFormat(val extension: String) {
+    json("json"), yaml("yaml"), yml("yaml")
 }
 
 enum class ClientApiStyle {

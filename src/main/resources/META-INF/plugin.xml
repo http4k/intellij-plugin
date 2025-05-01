@@ -6,6 +6,7 @@
     <version>1.5.0</version>
     <change-notes><![CDATA[
       <ul>
+        <li>1.6.0 - Upgrade libraries and enable K2 mode</li>
         <li>1.5.0 - Fix to ensure correct files enable New submenu actions correctly</li>
         <li>1.4.0 - Add generation of data4k wrapper classes from JSON files</li>
         <li>1.3.0 - Add generation of data classes from JSON/YAML files</li>

@@ -54,6 +54,6 @@ intellijPlatform {
 tasks {
     publishPlugin {
         token.set(System.getenv("JETBRAINS_TOKEN"))
-        hidden.set(true)
+//        hidden.set(true)
     }
 }

@@ -19,11 +19,6 @@ It:
 </ul>
 <br/>
 
-<b>Currently not k2 compatible. To use, set the following Custom VM options:</b>
-<p>-Didea.kotlin.plugin.use.k2=false</p>
-
-<br/>
-
 <b>*Note that these functions sends the contents of the file to the stateless <a href="https://toolboc.http4k.org">http4k Toolbox</a> server for processing.</b>
 
 <br/>

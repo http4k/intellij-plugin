@@ -1,11 +1,11 @@
 plugins {
     id("java")
-    kotlin("jvm") version "2.2.0"
+    kotlin("jvm") version "2.0.21"
     id("org.jetbrains.intellij.platform") version "2.6.0"
 }
 
-group = "org.intellij.sdk"
-version = "2.0.0"
+group = "org.http4k"
+version = "1.9.0"
 
 repositories {
     mavenCentral()
@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        intellijIdeaCommunity("2024.2.6")
+        intellijIdeaCommunity("2024.2.1", false)
         bundledPlugin("com.intellij.java")
         bundledPlugin("com.intellij.gradle")
         bundledPlugin("org.jetbrains.kotlin")
@@ -41,6 +41,7 @@ intellijPlatform {
     pluginConfiguration {
         ideaVersion {
             sinceBuild = "242"
+            untilBuild = provider { null }
         }
     }
     pluginVerification {

@@ -3,10 +3,11 @@
     <id>http4k.project.wizard</id>
     <name>http4k Toolbox</name>
     <vendor email="info@http4k.org" url="https://http4k.org">http4k</vendor>
-    <version>1.7.0</version>
+    <version>1.8.0</version>
     <change-notes><![CDATA[
       <ul>
-        <li>1.7.0 - Upgrade libraries and enable K2 mode</li>
+        <li>1.8.0 - Upgrade libraries</li>
+        <li>1.7.0 - Upgrade libraries</li>
         <li>1.6.0 - Upgrade libraries</li>
         <li>1.5.0 - Fix to ensure correct files enable New submenu actions correctly</li>
         <li>1.4.0 - Add generation of data4k wrapper classes from JSON files</li>
@@ -36,6 +37,11 @@ It:
     <li>*generates HTTP request/response code from "*.http" files. Right click on the file and select <b>New -> http4k -> HTTP Request/Response</b></li>
     <li>*generates <a href="https://github.com/fork-handles/forkhandles/tree/trunk/data4k">data4k</a> wrapper classes from JSON files. Right click on the file and select <b>New -> http4k -> data4k wrapper</b></li>
 </ul>
+<br/>
+
+<b>Currently not k2 compatible. To use, set the following Custom VM options:</b>
+<p>-Didea.kotlin.plugin.use.k2=false</p>
+
 <br/>
 
 <b>*Note that these functions sends the contents of the file to the stateless <a href="https://toolboc.http4k.org">http4k Toolbox</a> server for processing.</b>

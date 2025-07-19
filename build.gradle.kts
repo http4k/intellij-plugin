@@ -1,63 +1,52 @@
-import org.gradle.api.JavaVersion.VERSION_17
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
-
 plugins {
-    kotlin("jvm")
-    id("org.jetbrains.intellij")
-    idea
+    id("java")
+    kotlin("jvm") version "2.0.21"
+    id("org.jetbrains.intellij.platform") version "2.6.0"
 }
 
 group = "org.http4k"
+version = "1.9.0"
 
 repositories {
     mavenCentral()
+
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
-    implementation(platform(Http4k.bom))
-    implementation(platform("dev.forkhandles:forkhandles-bom:_"))
-    implementation(Http4k.core)
-    implementation(Http4k.cloudnative)
-    implementation(Http4k.format.jackson)
-    implementation(Http4k.format.jacksonYaml)
-    implementation(Http4k.multipart)
+    intellijPlatform {
+        intellijIdeaCommunity("2024.2.1", false)
+        bundledPlugin("com.intellij.java")
+        bundledPlugin("com.intellij.gradle")
+        bundledPlugin("org.jetbrains.kotlin")
+    }
+
+    implementation(platform("org.http4k:http4k-bom:5.47.0.0"))
+    implementation(platform("dev.forkhandles:forkhandles-bom:2.22.3.0"))
+    implementation("org.swinglabs:swingx:1.6.1")
+
+    implementation("org.http4k:http4k-cloudnative")
+    implementation("org.http4k:http4k-format-jackson")
+    implementation("org.http4k:http4k-format-jackson-yaml")
+    implementation("org.http4k:http4k-multipart")
     implementation("dev.forkhandles:values4k")
     implementation("dev.forkhandles:result4k")
-    implementation("org.swinglabs:swingx:1.6.1")
 }
 
-tasks {
-    withType<KotlinJvmCompile>().configureEach {
-        compilerOptions {
-            jvmTarget.set(JVM_17)
+intellijPlatform {
+    buildSearchableOptions = false
+
+    pluginConfiguration {
+        ideaVersion {
+            sinceBuild = "242"
+            untilBuild = provider { null }
         }
     }
-
-    java {
-        sourceCompatibility = VERSION_17
-        targetCompatibility = VERSION_17
-    }
-
-    withType<Test> {
-        useJUnitPlatform()
-        jvmArgs = listOf("--enable-preview")
-    }
-
-    publishPlugin {
-        token = System.getenv("JETBRAINS_TOKEN")
+    pluginVerification {
+        ides {
+            recommended()
+        }
     }
 }
-
-kotlin {
-    jvmToolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
-    }
-}
-
-intellij {
-    version.set("2024.1.2")
-    plugins.set(listOf("gradle", "java", "org.jetbrains.kotlin"))
-    updateSinceUntilBuild.set(false)
-}
-

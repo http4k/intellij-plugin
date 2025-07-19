@@ -1,11 +1,38 @@
 <idea-plugin>
-    <idea-version since-build="241"/>
-    <id>http4k.project.wizard</id>
-    <name>http4k Toolbox</name>
-    <vendor email="info@http4k.org" url="https://http4k.org">http4k</vendor>
-    <version>1.8.0</version>
-    <change-notes><![CDATA[
+
+  <id>http4k.project.wizard</id>
+  <name>http4k Toolbox</name>
+
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.modules.java</depends>
+  <depends>org.jetbrains.kotlin</depends>
+  <depends>com.intellij.gradle</depends>
+
+  <description>
+    <![CDATA[
+This plugin streamlines the process of working with <a href="https://http4k.org"><b>http4k</b></a> projects by providing a user-friendly functionality within the IDE.
+<br>
+It:
+<ul>
+    <li>generates boilerplate http4k based projects with ease by integrating a dynamic wizard into IntelliJ IDEA <b>New Project</b> option</li>
+    <li>*generates http4k server, client and model code from <a href="https://www.openapis.org/">OpenAPI</a> spec. Right click on the file and select <b>New -> http4k -> OpenAPI to http4k</b></li>
+    <li>*generates data classes from JSON/YAML files. Right click on the file and select <b>New -> http4k -> Dataclasses</b></li>
+    <li>*generates HTTP request/response code from "*.http" files. Right click on the file and select <b>New -> http4k -> HTTP Request/Response</b></li>
+    <li>*generates <a href="https://github.com/fork-handles/forkhandles/tree/trunk/data4k">data4k</a> wrapper classes from JSON files. Right click on the file and select <b>New -> http4k -> data4k wrapper</b></li>
+</ul>
+<br/>
+
+<b>*Note that these functions sends the contents of the file to the stateless <a href="https://toolboc.http4k.org">http4k Toolbox</a> server for processing.</b>
+
+<br/>
+All generated code is added to the project in the `.http4k` directory structure added to the root of the project. We recommend you add this project to your .gitignore file.
+]]>
+  </description>
+
+  <change-notes>
+    <![CDATA[
       <ul>
+        <li>1.9.0 - Now with K2 version support</li>
         <li>1.8.0 - Upgrade libraries</li>
         <li>1.7.0 - Upgrade libraries</li>
         <li>1.6.0 - Upgrade libraries</li>
@@ -24,87 +51,63 @@
         <li>0.0.1 - Initial release</li>
       </ul>
     ]]>
-    </change-notes>
+  </change-notes>
 
-    <description><![CDATA[
-This plugin streamlines the process of working with <a href="https://http4k.org"><b>http4k</b></a> projects by providing a user-friendly functionality within the IDE.
-<br>
-It:
-<ul>
-    <li>generates boilerplate http4k based projects with ease by integrating a dynamic wizard into IntelliJ IDEA <b>New Project</b> option</li>
-    <li>*generates http4k server, client and model code from <a href="https://www.openapis.org/">OpenAPI</a> spec. Right click on the file and select <b>New -> http4k -> OpenAPI to http4k</b></li>
-    <li>*generates data classes from JSON/YAML files. Right click on the file and select <b>New -> http4k -> Dataclasses</b></li>
-    <li>*generates HTTP request/response code from "*.http" files. Right click on the file and select <b>New -> http4k -> HTTP Request/Response</b></li>
-    <li>*generates <a href="https://github.com/fork-handles/forkhandles/tree/trunk/data4k">data4k</a> wrapper classes from JSON files. Right click on the file and select <b>New -> http4k -> data4k wrapper</b></li>
-</ul>
-<br/>
+  <vendor url="https://http4k.org">http4k</vendor>
 
-<b>Currently not k2 compatible. To use, set the following Custom VM options:</b>
-<p>-Didea.kotlin.plugin.use.k2=false</p>
+  <extensions defaultExtensionNs="com.intellij">
+    <moduleBuilder builderClass="org.http4k.intellij.Http4kModuleBuilder"
+                   order="first"/>
+  </extensions>
 
-<br/>
+  <actions>
+    <group id="open-api-menu" popup="true" text="OpenAPI to http4k" icon="/images/http4k.png"></group>
 
-<b>*Note that these functions sends the contents of the file to the stateless <a href="https://toolboc.http4k.org">http4k Toolbox</a> server for processing.</b>
+    <group id="http4k-menu" popup="true" text="http4k" icon="/images/http4k.png">
+      <reference ref="open-api-menu"/>
+    </group>
 
-<br/>
-All generated code is added to the project in the `.http4k` directory structure added to the root of the project. We recommend you add this project to your .gitignore file.
-]]></description>
+    <group id="http4k-new-group" icon="/images/http4k.png">
+      <reference ref="http4k-menu"/>
+      <separator/>
+      <add-to-group group-id="NewGroup" anchor="last"/>
+    </group>
 
-    <depends>com.intellij.modules.java</depends>
-    <depends>org.jetbrains.kotlin</depends>
-    <depends>com.intellij.gradle</depends>
+    <action id="generate_http4k_standard"
+            class="org.http4k.intellij.action.GenerateOpenApiCodeStandard"
+            text="... with standard client"
+            description="Generate http4k server, client and model code from OpenAPI spec">
+      <add-to-group group-id="open-api-menu" anchor="last"/>
+    </action>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <moduleBuilder builderClass="org.http4k.intellij.Http4kModuleBuilder"/>
-        <supportsKotlinPluginMode supportsK2="true" />
-    </extensions>
+    <action id="generate_dataclasses"
+            class="org.http4k.intellij.action.GenerateDataClasses"
+            text="Dataclasses"
+            description="Generate Data classes from format">
+      <add-to-group group-id="http4k-menu" anchor="last"/>
+    </action>
 
-    <actions>
-        <group id="open-api-menu" popup="true" text="OpenAPI to http4k" icon="/images/http4k.png"></group>
+    <action id="generate_data4k"
+            class="org.http4k.intellij.action.GenerateData4kClasses"
+            text="data4k wrapper"
+            description="Generate Data4k wrapper from format">
+      <add-to-group group-id="http4k-menu" anchor="last"/>
+    </action>
 
-        <group id="http4k-menu" popup="true" text="http4k" icon="/images/http4k.png">
-            <reference ref="open-api-menu"/>
-        </group>
+    <action id="generate_http_message"
+            class="org.http4k.intellij.action.GenerateMessageCode"
+            text="HTTP Request/Response"
+            description="Generate HTTP message from file">
+      <add-to-group group-id="http4k-menu" anchor="last"/>
+    </action>
 
-        <group id="http4k-new-group" icon="/images/http4k.png">
-            <reference ref="http4k-menu"/>
-            <separator/>
-            <add-to-group group-id="NewGroup" anchor="last"/>
-        </group>
+    <action id="generate_http4k_connect"
+            class="org.http4k.intellij.action.GenerateOpenApiCodeConnect"
+            text="... with http4k-connect client"
+            description="Generate http4k server, client and model code from OpenAPI spec">
+      <add-to-group group-id="open-api-menu" anchor="last"/>
+    </action>
+  </actions>
 
-        <action id="generate_http4k_standard"
-                class="org.http4k.intellij.action.GenerateOpenApiCodeStandard"
-                text="... with standard client"
-                description="Generate http4k server, client and model code from OpenAPI spec">
-            <add-to-group group-id="open-api-menu" anchor="last"/>
-        </action>
 
-        <action id="generate_dataclasses"
-                class="org.http4k.intellij.action.GenerateDataClasses"
-                text="Dataclasses"
-                description="Generate Data classes from format">
-            <add-to-group group-id="http4k-menu" anchor="last"/>
-        </action>
-
-        <action id="generate_data4k"
-                class="org.http4k.intellij.action.GenerateData4kClasses"
-                text="data4k wrapper"
-                description="Generate Data4k wrapper from format">
-            <add-to-group group-id="http4k-menu" anchor="last"/>
-        </action>
-
-        <action id="generate_http_message"
-                class="org.http4k.intellij.action.GenerateMessageCode"
-                text="HTTP Request/Response"
-                description="Generate HTTP message from file">
-            <add-to-group group-id="http4k-menu" anchor="last"/>
-        </action>
-
-        <action id="generate_http4k_connect"
-                class="org.http4k.intellij.action.GenerateOpenApiCodeConnect"
-                text="... with http4k-connect client"
-                description="Generate http4k server, client and model code from OpenAPI spec">
-            <add-to-group group-id="open-api-menu" anchor="last"/>
-        </action>
-    </actions>
 </idea-plugin>

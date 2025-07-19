@@ -55,6 +55,10 @@ All generated code is added to the project in the `.http4k` directory structure 
 
   <vendor url="https://http4k.org">http4k</vendor>
 
+  <extensions defaultExtensionNs="org.jetbrains.kotlin">
+      <supportsKotlinPluginMode supportsK2="true" />
+  </extensions>
+
   <extensions defaultExtensionNs="com.intellij">
     <moduleBuilder builderClass="org.http4k.intellij.Http4kModuleBuilder"
                    order="first"/>

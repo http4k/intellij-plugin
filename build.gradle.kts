@@ -1,7 +1,9 @@
 plugins {
     id("java")
-    kotlin("jvm") version "2.0.21"
-    id("org.jetbrains.intellij.platform") version "2.6.0"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.intellij.platform)
+    alias(libs.plugins.versions)
+    alias(libs.plugins.version.catalog.update)
 }
 
 group = "org.http4k"
@@ -17,22 +19,22 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        intellijIdeaCommunity("2024.2.1", false)
+        intellijIdeaCommunity(libs.versions.intellij.idea, false)
         bundledPlugin("com.intellij.java")
         bundledPlugin("com.intellij.gradle")
         bundledPlugin("org.jetbrains.kotlin")
     }
 
-    implementation(platform("org.http4k:http4k-bom:5.47.0.0"))
-    implementation(platform("dev.forkhandles:forkhandles-bom:2.22.3.0"))
-    implementation("org.swinglabs:swingx:1.6.1")
+    implementation(platform(libs.http4k.bom))
+    implementation(platform(libs.forkhandles.bom))
+    implementation(libs.swingx)
 
-    implementation("org.http4k:http4k-cloudnative")
-    implementation("org.http4k:http4k-format-jackson")
-    implementation("org.http4k:http4k-format-jackson-yaml")
-    implementation("org.http4k:http4k-multipart")
-    implementation("dev.forkhandles:values4k")
-    implementation("dev.forkhandles:result4k")
+    implementation(libs.http4k.cloudnative)
+    implementation(libs.http4k.format.jackson)
+    implementation(libs.http4k.format.jackson.yaml)
+    implementation(libs.http4k.multipart)
+    implementation(libs.forkhandles.values4k)
+    implementation(libs.forkhandles.result4k)
 }
 
 intellijPlatform {

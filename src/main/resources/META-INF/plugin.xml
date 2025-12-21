@@ -32,6 +32,7 @@ All generated code is added to the project in the `.http4k` directory structure 
   <change-notes>
     <![CDATA[
       <ul>
+        <li>1.10.0 - Updated to newest IntelliJ platform</li>
         <li>1.9.0 - Now with K2 version support</li>
         <li>1.8.0 - Upgrade libraries</li>
         <li>1.7.0 - Upgrade libraries</li>

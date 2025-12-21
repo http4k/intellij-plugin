@@ -41,7 +41,7 @@ import java.util.zip.ZipOutputStream
 abstract class GenerateCode(private val functionName: String) : AnAction(), ActionUpdateThreadAware {
     override fun update(e: AnActionEvent) {
         val file = e.dataContext.getData(VIRTUAL_FILE)
-        e.presentation.setEnabledAndVisible(activeFor(file))
+        e.presentation.isEnabledAndVisible = activeFor(file)
     }
 
     override fun getActionUpdateThread() = BGT
@@ -64,7 +64,7 @@ abstract class GenerateCode(private val functionName: String) : AnAction(), Acti
             .onFailure { it.orThrow() }
             .unzipInto(target)
 
-        VirtualFileManager.getInstance().syncRefresh();
+        VirtualFileManager.getInstance().syncRefresh()
 
         val root = project.guessProjectDir()
             ?.findChild(".http4k")
@@ -144,10 +144,10 @@ private fun VirtualFile.supportedFormat() = resultFrom {
 private fun isOpenApi(file: VirtualFile?): Boolean {
     if (file == null || file.supportedFormat() == null) return false
     else {
-        val content = file.inputStream.reader().readText() ?: ""
+        val content = file.inputStream.reader().readText()
         return try {
             Jackson.asA<Map<String, Any>>(content)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             JacksonYaml.asA<Map<String, Any>>(content)
         }["openapi"] != null
     }

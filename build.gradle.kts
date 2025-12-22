@@ -19,7 +19,9 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        intellijIdeaCommunity(libs.versions.intellij.idea)
+        intellijIdeaCommunity(libs.versions.intellij.idea) {
+            useInstaller = false
+        }
         bundledPlugin("com.intellij.java")
         bundledPlugin("com.intellij.gradle")
         bundledPlugin("org.jetbrains.kotlin")

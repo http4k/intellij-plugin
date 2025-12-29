@@ -1,7 +1,7 @@
 name: Update Dependencies
 on:
   schedule:
-  - cron: 0 08 * * 1
+  - cron: 0 8 * * 1
   workflow_dispatch:
 jobs:
   update-dependencies:
@@ -24,8 +24,6 @@ jobs:
       uses: gradle/actions/setup-gradle@v5.0.0
     - name: Build
       run: ./gradlew versionCatalogUpdate
-      shell: bash
-    - run: ls
       shell: bash
     - name: Check for changes
       id: changes

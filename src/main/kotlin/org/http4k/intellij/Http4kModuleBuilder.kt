@@ -14,6 +14,7 @@ import dev.forkhandles.result4k.map
 import dev.forkhandles.result4k.mapFailure
 import dev.forkhandles.result4k.onFailure
 import dev.forkhandles.result4k.orThrow
+import kotlinx.coroutines.runBlocking
 import org.http4k.intellij.step.FailedView
 import org.http4k.intellij.step.QuestionnaireStep
 import org.http4k.intellij.utils.backgroundTask
@@ -24,7 +25,7 @@ import org.http4k.intellij.wizard.Answer
 import org.http4k.intellij.wizard.Answer.Text
 import org.http4k.intellij.wizard.ToolboxApi
 import org.jetbrains.plugins.gradle.service.project.GradleAutoImportAware
-import org.jetbrains.plugins.gradle.service.project.open.linkAndRefreshGradleProject
+import org.jetbrains.plugins.gradle.service.project.open.linkAndSyncGradleProject
 import java.io.File
 import java.util.concurrent.atomic.AtomicReference
 
@@ -66,7 +67,9 @@ class Http4kModuleBuilder : ModuleBuilder() {
                 modifiableRootModel.project.createRunConfiguration(pkg, clazz)
                 GradleAutoImportAware()
                 invokeLater {
-                    linkAndRefreshGradleProject(root.canonicalPath + "/build.gradle.kts", project)
+                    runBlocking {
+                        linkAndSyncGradleProject(project, root.canonicalPath + "/build.gradle.kts")
+                    }
                 }
             }
         }

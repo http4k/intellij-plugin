@@ -33,6 +33,14 @@ private class Http4kConfigurationFactory(private val pkg: String, private val cl
     override fun createTemplateConfiguration(project: Project) =
         KotlinRunConfigurationType().createTemplateConfiguration(project).apply {
             name = "Run App"
+            /**
+             * Eventually use:
+             *             try {
+             *                 mainClassName = "$pkg.${clazz}Kt"
+             *             } catch (e: NoSuchMethodError) {
+             *                 runClass = "$pkg.${clazz}Kt"
+             *             }
+             */
             runClass = "$pkg.${clazz}Kt"
             setModuleName("$clazz.main")
             beforeRunTasks = listOf(MakeBeforeRunTask())

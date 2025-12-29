@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "org.http4k"
-version = "1.10.0"
+version = "1.11.0"
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     intellijPlatform {
-        intellijIdeaCommunity(libs.versions.intellij.idea) {
+        intellijIdea(libs.versions.intellij.idea) {
             useInstaller = false
         }
         bundledPlugin("com.intellij.java")

@@ -1,7 +1,6 @@
 [versions]
-forkhandles-bom = "2.22.5.0"
-http4k-bom = "5.47.0.0"
-intellij-idea = "2025.3"
+forkhandles-bom = "2.25.0.0"
+http4k-bom = "6.26.0.0"
 intellij-platform = "2.10.5"
 kotlin = "2.3.0"
 swingx = "1.6.1"

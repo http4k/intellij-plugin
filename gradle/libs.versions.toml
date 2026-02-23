@@ -1,11 +1,10 @@
 [versions]
-forkhandles-bom = "2.22.5.0"
-http4k-bom = "5.47.0.0"
-intellij-idea = "2025.3"
-intellij-platform = "2.10.5"
-kotlin = "2.3.0"
+forkhandles-bom = "2.25.2.1"
+http4k-bom = "6.31.0.0"
+intellij-platform = "2.11.0"
+kotlin = "2.3.10"
 swingx = "1.6.1"
-version-catalog-update = "1.0.1"
+version-catalog-update = "1.1.0"
 versions = "0.53.0"
 
 [libraries]

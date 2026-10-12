@@ -2,30 +2,27 @@ name: Release
 on:
   push:
     tags:
-      - '*'
-
+    - '*'
 jobs:
   release:
-    name: Publish Plugin
     runs-on: ubuntu-latest
+    name: Publish Plugin
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6.0.2
-      - name: Grab tag name
-        uses: olegtarasov/get-tag@v2.1.4
-        id: tagName
-      - name: Setup Java
-        uses: actions/setup-java@v5.2.0
-        with:
-          distribution: temurin
-          java-version: 21
-          cache: gradle
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v5.0.1
-      - name: Publish Plugin
-        env:
-          JETBRAINS_TOKEN: ${{ secrets.JETBRAINS_TOKEN }}
-        run: ./gradlew publishPlugin
+    - name: Checkout
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+    - name: Setup Java
+      uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6
+      with:
+        cache: gradle
+        java-version: '21'
+        distribution: temurin
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@3f5f9adaf7d9fecd50b5935e54106014257a94e6
+    - name: Publish Plugin
+      run: ./gradlew publishPlugin
+      env:
+        JETBRAINS_TOKEN: ${{ secrets.JETBRAINS_TOKEN }}
+      shell: bash

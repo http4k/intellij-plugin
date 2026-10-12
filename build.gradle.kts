@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.intellij.platform)
     alias(libs.plugins.versions)
     alias(libs.plugins.version.catalog.update)
+    alias(libs.plugins.typeflows)
 }
 
 group = "org.http4k"
@@ -15,6 +16,10 @@ repositories {
     intellijPlatform {
         defaultRepositories()
     }
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 dependencies {
@@ -31,12 +36,16 @@ dependencies {
     implementation(platform(libs.forkhandles.bom))
     implementation(libs.swingx)
 
-    implementation(libs.http4k.cloudnative)
+    implementation(libs.http4k.platform.core)
     implementation(libs.http4k.format.jackson)
     implementation(libs.http4k.format.jackson.yaml)
     implementation(libs.http4k.multipart)
     implementation(libs.forkhandles.values4k)
     implementation(libs.forkhandles.result4k)
+
+    typeflowsApi(libs.typeflows.github)
+    typeflowsApi(libs.typeflows.github.marketplace)
+    typeflowsApi(libs.http4k.standards)
 }
 
 intellijPlatform {

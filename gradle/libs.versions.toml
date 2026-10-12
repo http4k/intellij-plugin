@@ -1,26 +1,34 @@
 [versions]
-forkhandles-bom = "2.22.5.0"
-http4k-bom = "5.47.0.0"
+forkhandles-bom = "3.1.0.0"
+http4k-bom = "6.61.0.0"
+http4k-standards = "1.32.0.0"
+# @pin
 intellij-idea = "2025.3"
+# @pin
 intellij-platform = "2.10.5"
-kotlin = "2.3.0"
+kotlin = "2.4.21"
 swingx = "1.6.1"
-version-catalog-update = "1.0.1"
-versions = "0.53.0"
+typeflows = "0.34.0-beta"
+version-catalog-update = "1.1.1"
+versions = "0.66.0"
 
 [libraries]
 forkhandles-bom = { module = "dev.forkhandles:forkhandles-bom", version.ref = "forkhandles-bom" }
 forkhandles-result4k = { module = "dev.forkhandles:result4k" }
 forkhandles-values4k = { module = "dev.forkhandles:values4k" }
 http4k-bom = { module = "org.http4k:http4k-bom", version.ref = "http4k-bom" }
-http4k-cloudnative = { module = "org.http4k:http4k-cloudnative" }
 http4k-format-jackson = { module = "org.http4k:http4k-format-jackson" }
 http4k-format-jackson-yaml = { module = "org.http4k:http4k-format-jackson-yaml" }
 http4k-multipart = { module = "org.http4k:http4k-multipart" }
+http4k-platform-core = { module = "org.http4k:http4k-platform-core" }
+http4k-standards = { module = "org.http4k:typeflows", version.ref = "http4k-standards" }
 swingx = { module = "org.swinglabs:swingx", version.ref = "swingx" }
+typeflows-github = { module = "io.typeflows:typeflows-github", version.ref = "typeflows" }
+typeflows-github-marketplace = { module = "io.typeflows:typeflows-github-marketplace", version.ref = "typeflows" }
 
 [plugins]
 intellij-platform = { id = "org.jetbrains.intellij.platform", version.ref = "intellij-platform" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+typeflows = { id = "io.typeflows", version.ref = "typeflows" }
 version-catalog-update = { id = "nl.littlerobots.version-catalog-update", version.ref = "version-catalog-update" }
-versions = { id = "com.github.ben-manes.versions", version.ref = "versions" }
+versions = { id = "io.github.ben-manes.versions", version.ref = "versions" }

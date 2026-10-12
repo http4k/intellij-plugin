@@ -2,6 +2,7 @@
 *.log
 hs_err_pid*
 .*/
+!.github/
 .gradle
 .idea
 .intellijPlatform

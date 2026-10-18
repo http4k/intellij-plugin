@@ -64,6 +64,12 @@ intellijPlatform {
     }
 }
 
+versionCatalogUpdate {
+    keep {
+        keepUnusedVersions = true
+    }
+}
+
 tasks {
     publishPlugin {
         token.set(System.getenv("JETBRAINS_TOKEN"))
